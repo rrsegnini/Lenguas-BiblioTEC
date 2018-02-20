@@ -10,5 +10,5 @@ package materialRegistration;
  * @author danielalvarado
  */
 public enum BookType {
-    Digital,Physical;
+    DIGITAL,PHYSICAL;
 }

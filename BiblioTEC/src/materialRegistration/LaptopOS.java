@@ -9,8 +9,6 @@ package materialRegistration;
  *
  * @author danielalvarado
  */
-public interface Material {
-        boolean onLoan();
-        int getID();
-        void lendingMaterial();
+public enum LaptopOS {
+    MACOSX,WINDOWS,LINUX,OTHER;
 }

@@ -10,7 +10,7 @@ package materialRegistration;
  * @author danielalvarado
  */
 public class Book implements Material{
-    private static int id;
+    private int id;
     private String name;
     private String author;
     private int year;
@@ -34,6 +34,7 @@ public class Book implements Material{
     
     //
     
+    @Override
     public int getID() {return this.id;}
     
     public String getName() {return this.name;}
@@ -55,7 +56,7 @@ public class Book implements Material{
     
     
     private String BookType2Str(BookType _type) {
-        if (_type == BookType.Digital) {
+        if (_type == BookType.DIGITAL) {
             return "Digital";
         }
         else {
@@ -65,4 +66,7 @@ public class Book implements Material{
     
     @Override
     public boolean onLoan() {return this.state;};
+    
+    @Override
+    public void lendingMaterial() {this.state = true;}
 }
