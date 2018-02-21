@@ -10,5 +10,18 @@ package materialRegistration;
  * @author danielalvarado
  */
 public class Projector extends Audiovisual{
+    private int lumens;
     
+    public Projector(String _model, String _brand, int _serialNumber, int _lumens) {
+        super(_model,_brand,_serialNumber); 
+        this.lumens = _lumens;
+    }
+
+    public void setLumens(int lumens) {
+        this.lumens = lumens;
+    }
+    public int getLumens() {
+        return lumens;
+    }
+
 }
