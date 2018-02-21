@@ -11,4 +11,5 @@ package loan;
  */
 public class LateFee {
     studentRegistration.Student student;
+    
 }

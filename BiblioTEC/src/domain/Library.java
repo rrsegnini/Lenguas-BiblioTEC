@@ -5,10 +5,16 @@
  */
 package domain;
 
+import java.util.ArrayList;
+import java.util.List;
+import materialRegistration.Book;
+
+
 /**
  *
  * @author danielalvarado
  */
 public class Library {
+    List<Book> bookList = new ArrayList<>();
     
 }
