@@ -44,4 +44,15 @@ public class Student {
         return this.name + " " + this.lastName;
     }
     
+    /**
+     * metodo que me retorna el tamanno en bytes del objeto
+     * actual
+     * @return
+     */
+    public int size() {
+        return this.getFullName().length()*2 + this.getLastName().length()*2
+                +4;
+    }
+    
+    
 }
