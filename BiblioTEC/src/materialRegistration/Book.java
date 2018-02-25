@@ -32,6 +32,11 @@ public class Book implements Material{
         this.state = false;
     }
     
+    public int size() {
+        return 4+name.length()*2 + author.length() + 4 + 12*2 + ISBN.length() 
+                +1;
+    }
+    
     //
     
     @Override
@@ -53,6 +58,23 @@ public class Book implements Material{
     
     public String getISBN() {return this.ISBN;}
     public void setISBN(String _isbn) {this.ISBN = _isbn;}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isState() {
+        return state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
+    }
+    
     
     
     private String BookType2Str(BookType _type) {

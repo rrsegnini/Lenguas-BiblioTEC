@@ -4,37 +4,31 @@
  * and open the template in the editor.
  */
 package file;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
+import materialRegistration.Book;
 import studentRegistration.Student;
 
 /**
  *
  * @author danielalvarado
  */
-public class StudentFile {
+public class BookFile {
     public RandomAccessFile randomAccessFile;
     private int regsQuantity;//me indica la cantidad de registros
     private int regSize;
     private String myFilePath;
     
     
-    //constructor
-    /**
-     * 
-     * @param file
-     * @throws IOException
-     */
-    public StudentFile(File file) throws IOException{
+    public BookFile(File file) throws IOException{
         start(file);
     }
-    
-    private void start(File file) throws IOException{
-        //almaceno la ruta
+
+    private void start(File file) throws IOException  {
+            //almaceno la ruta
         myFilePath = file.getPath();
         
         //tamanno maximo de los registros dentro de esta 
@@ -59,27 +53,22 @@ public class StudentFile {
         return regsQuantity;
     }
     
-    /**
-     * inserta un nuevo registro pero en una posicion existente
-     * @param position
-     * @param _student
-     * @return
-     * @throws IOException
-     */
-    public boolean putValue(int position, Student _student) throws IOException{
+    public boolean putValue(int position, Book _book) throws IOException{
         //una pequenna validacion antes de insertar
         if(position >= 0 && position <= regsQuantity){
-            if(_student.size() > regSize){
+            if(_book.size() > regSize){
                 System.err.print("7001 record size is out of bounds");
                 return false;
             }
             else{
                 //escribimos en archivo
                 randomAccessFile.seek(position * regSize);
-                randomAccessFile.writeUTF(_student.getName());
-                randomAccessFile.writeUTF(_student.getLastName());
-                randomAccessFile.writeInt(_student.getID());
-                
+                randomAccessFile.writeInt(_book.getID());
+                randomAccessFile.writeUTF(_book.getName());
+                randomAccessFile.writeUTF(_book.getAuthor());
+                randomAccessFile.writeInt(_book.getYear());
+                randomAccessFile.writeUTF(_book.getISBN());
+                randomAccessFile.writeBoolean(_book.onLoan());
                 return true;
             }
         }
@@ -89,7 +78,28 @@ public class StudentFile {
                 return false;
         }
         
-    }//fin metodo
+    }
+    
+    
+    
+
+     public List<Book> getBooks(String _letters) throws IOException {
+        
+        Book book;
+        List<Book> books = new ArrayList<Book>();
+        int pos = _letters.length();
+        for(int i = 0; i < regsQuantity; i++){
+            
+            //obtengo a la persona de esa posicion
+            book = this.getBook(i);
+            String name = book.getName();
+            if (name.substring(0, pos) == _letters) {
+                books.add(book);
+            }
+        }
+        return books;
+    }
+     
     
     /**
      * agrega un registro nuevo pero al final del archivo, por esa razon
@@ -98,9 +108,9 @@ public class StudentFile {
      * @return
      * @throws IOException
      */
-    public boolean addEndRecord(Student _student) throws IOException{
+    public boolean addEndRecord(Book _book) throws IOException{
         //insertar al final del archivo
-        boolean success = putValue(regsQuantity, _student);
+        boolean success = putValue(regsQuantity, _book);
         
         if(success){
             ++regsQuantity;
@@ -115,27 +125,30 @@ public class StudentFile {
      * @return objeto de tipo Person con los datos del registro de esa persona
      * @throws IOException
      */
-    public Student getStudent(int position) throws IOException{
+    public Book getBook(int position) throws IOException{
         //validacion de la posicion
         if(position >= 0 && position <= regsQuantity){
             //colocamos el puntero en el lugar 
             randomAccessFile.seek(position * regSize);
             
             //instancia de person
-            Student myStudent = new Student();
+            Book book = new Book();
             
             //llevamos a cabo las lecturas
-            myStudent.setID(randomAccessFile.readInt());
-            myStudent.setName(randomAccessFile.readUTF());
-            myStudent.setLastName(randomAccessFile.readUTF());
-            myStudent.setCareerStr(randomAccessFile.readUTF());
+            book.setId(randomAccessFile.readInt());
+            book.setName(randomAccessFile.readUTF());
+            book.setAuthoer(randomAccessFile.readUTF());
+            book.setYear(randomAccessFile.readInt());
+            book.setISBN(randomAccessFile.readUTF());
+            book.setState(randomAccessFile.readBoolean());
+            
             
             //si es delete no retorno
-            if(myStudent.getName().equalsIgnoreCase("delete")){
+            if(book.getName().equalsIgnoreCase("delete")){
                 return null;
             }
             else{
-                return myStudent;
+                return book;
             }
             
         }
@@ -145,41 +158,25 @@ public class StudentFile {
         }
     }//fin de metodo
     
-    public Student getStudentByName(String _name) throws IOException {
-        Student myStudent;
+    public Book getBooktByName(String _name) throws IOException {
+        Book book;
         
         //buscar el registro para la eliminacion
         for(int i = 0; i < regsQuantity; i++){
             
             //obtengo a la persona de esa posicion
-            myStudent = this.getStudent(i);
+            book = this.getBook(i);
                 
-            if(myStudent.getName().equalsIgnoreCase(_name)){
+            if(book.getName().equalsIgnoreCase(_name)){
 
-                return myStudent;
+                return book;
             }
         }
         
         return null;
     }
     
-    public List<Student> getStudents(String _letters) {
-        Student myStudent;
-        
-        //buscar el registro para la eliminacion
-        for(int i = 0; i < regsQuantity; i++){
-            
-            //obtengo a la persona de esa posicion
-            myStudent = this.getStudent(i);
-                
-            if(myStudent.getName().equalsIgnoreCase(_name)){
-
-                return myStudent;
-            }
-        }
-        
-        return null;
-    }
+    
     
     
     /**
@@ -187,46 +184,45 @@ public class StudentFile {
      * @return una lista de objetos tipo Person
      * @throws IOException
      */
-    public List<Student> getAllStudents() throws IOException{
+    public List<Book> getAllBooks() throws IOException{
         
         //variables a retornar
-        List<Student> students = new ArrayList<Student>();
+        List<Book> books = new ArrayList<Book>();
         
         //recorro todos mis registros y los inserto en la lista
         for(int i = 0; i < regsQuantity; i++){
-            Student studentTemp = this.getStudent(i);
+            Book bookTemp = this.getBook(i);
             
-            if(studentTemp != null){
-                students.add(studentTemp);
+            if(bookTemp != null){
+                books.add(bookTemp);
             }
         }
         
-        return students;
+        return books;
     }//fin metodo
     
     
     public boolean deleteRecord(String name) throws IOException{
-        Student myStudent;
+        Book book;
         
         //buscar el registro para la eliminacion
         for(int i = 0; i < regsQuantity; i++){
             
             //obtengo a la persona de esa posicion
-            myStudent = this.getStudent(i);
+            book = this.getBook(i);
                 
             //pregunto si es la persona que quiero eliminar
-            if(myStudent.getName().equalsIgnoreCase(name)){
+            if(book.getName().equalsIgnoreCase(name)){
 
                 //marcar esta persona como eliminada
-                myStudent.setName("deleted");
+                book.setName("deleted");
 
-                return this.putValue(i, myStudent);
+                return this.putValue(i, book);
             }
         }
         
         //si llega a este punto no encontro a la persona
         return false;
     }
-       
     
 }

@@ -83,8 +83,8 @@ public class Student {
      * @return
      */
     public int size() {
-        return this.getFullName().length()*2 + this.getLastName().length()*2
-                +4+12*2; //12 es la longitud maxima del nombre de la carrera
+        return 4+this.getFullName().length()*2 + this.getLastName().length()*2
+                +12*2; //12 es la longitud maxima del nombre de la carrera
     }
     
     
