@@ -5,9 +5,20 @@
  */
 package domain;
 
+import file.BookFile;
+import file.StudentFile;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import loan.BookLoan;
+import loan.BookReturn;
+import loan.Loan;
 import materialRegistration.Book;
+import materialRegistration.BookType;
+import studentRegistration.Career;
+import studentRegistration.Student;
 
 
 /**
@@ -16,6 +27,10 @@ import materialRegistration.Book;
  */
 public class Library {
     List<List<Book>> bookList;
+    List<Student> studentsList = new ArrayList<>();
+    List<Loan> loansList = new ArrayList<>(); 
+    
+    
     
     public Library() {this.bookList = new ArrayList<>();
 }
@@ -32,5 +47,34 @@ public class Library {
             
         }
     }
+    
+    public boolean registerBook(String _name, String _author, int _year, 
+            BookType _type, String _isbn) throws IOException {
+        //escribe el libro en el archivo
+        File file = new File("/usr/local/bin/geeks");
+        BookFile bookFile = new BookFile(file);
+        //crea el objeto libro para poder agregarlo en el archivo
+        Book book = new Book( _name,  _author,  _year, _type,  _isbn);
+        //agrega el libro al archivo
+        return bookFile.addEndRecord(book);
+        
+    }
+    
+    public boolean registerStudent(int _id, String _name, String _lastName, Career _career) throws IOException {
+        File file = new File("/usr/local/bin/geeks");
+        StudentFile studentFile = new StudentFile(file);
+        Student newStudent = new Student(_id,_name,_lastName, _career);
+        return studentFile.addEndRecord(newStudent);
+    }
+    
+    public void loanBook(Book _book, Student _student) {
+        Date actualDate = new Date();
+        //int _ID, Student _student, Date _date,materialRegistration.Book _bookLoaned 
+        if (!_book.onLoan()) {
+            BookLoan newBookLoan = new BookLoan(1,_student,actualDate,_book);
+        }
+    }
+    
+    
     
 }
