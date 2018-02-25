@@ -15,6 +15,22 @@ import materialRegistration.Book;
  * @author danielalvarado
  */
 public class Library {
-    List<Book> bookList = new ArrayList<>();
+    List<List<Book>> bookList;
+    
+    public Library() {this.bookList = new ArrayList<>();
+}
+    
+    public void searchBook(String _letters, int _counter) {
+        List<Book> books = bookList.get(_counter);
+        Book book;
+        int pos = _letters.length();
+        for (int i = 0; i < books.size();i++) {
+            book = books.get(i);
+            if (book.getName().substring(0, pos) == _letters) {
+                books.add(book);
+            }
+            
+        }
+    }
     
 }
