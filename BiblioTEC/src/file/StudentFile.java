@@ -163,7 +163,7 @@ public class StudentFile {
         return null;
     }
     
-    public List<Student> getStudents(String _letters) {
+    /*public List<Student> getStudents(String _letters) {
         Student myStudent;
         
         //buscar el registro para la eliminacion
@@ -179,7 +179,7 @@ public class StudentFile {
         }
         
         return null;
-    }
+    }*/
     
     
     /**
