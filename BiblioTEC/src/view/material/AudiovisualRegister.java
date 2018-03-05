@@ -5,6 +5,7 @@
  */
 package view.material;
 
+import javax.swing.JOptionPane;
 import materialRegistration.LaptopOS;
 
 /**
@@ -30,18 +31,20 @@ public class AudiovisualRegister extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        projectorDialog = new javax.swing.JDialog();
+        laptioInfoLbl1 = new javax.swing.JLabel();
+        lumensTxt = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        acceptLapInfoBTN1 = new javax.swing.JButton();
+        acceptLapInfoBTN2 = new javax.swing.JButton();
         laptopDialog = new javax.swing.JDialog();
         laptioInfoLbl = new javax.swing.JLabel();
         osBox = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        screenSizeTxt = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         acceptLapInfoBTN = new javax.swing.JButton();
-        projectorDialog = new javax.swing.JDialog();
-        laptioInfoLbl1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        acceptLapInfoBTN1 = new javax.swing.JButton();
+        cancelLapInfoBTN2 = new javax.swing.JButton();
         registerLbl = new javax.swing.JLabel();
         titleLbl = new javax.swing.JLabel();
         modelAVTxt = new javax.swing.JTextField();
@@ -53,7 +56,72 @@ public class AudiovisualRegister extends javax.swing.JFrame {
         registerBookBTN = new javax.swing.JButton();
         avTypeBOX = new javax.swing.JComboBox<>();
 
-        laptioInfoLbl.setFont(new java.awt.Font("Blackout 2AM", 0, 36)); // NOI18N
+        projectorDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        projectorDialog.setMinimumSize(new java.awt.Dimension(300, 180));
+
+        laptioInfoLbl1.setFont(new java.awt.Font("Blackout 2AM", 0, 18)); // NOI18N
+        laptioInfoLbl1.setText("Projector information");
+
+        lumensTxt.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel4.setText("Lumens:");
+
+        acceptLapInfoBTN1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        acceptLapInfoBTN1.setText("Accept");
+        acceptLapInfoBTN1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                acceptLapInfoBTN1MouseClicked(evt);
+            }
+        });
+
+        acceptLapInfoBTN2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        acceptLapInfoBTN2.setText("Cancel");
+        acceptLapInfoBTN2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                acceptLapInfoBTN2MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout projectorDialogLayout = new javax.swing.GroupLayout(projectorDialog.getContentPane());
+        projectorDialog.getContentPane().setLayout(projectorDialogLayout);
+        projectorDialogLayout.setHorizontalGroup(
+            projectorDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(projectorDialogLayout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addGroup(projectorDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(projectorDialogLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lumensTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(projectorDialogLayout.createSequentialGroup()
+                        .addComponent(acceptLapInfoBTN2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(acceptLapInfoBTN1))
+                    .addComponent(laptioInfoLbl1))
+                .addContainerGap(53, Short.MAX_VALUE))
+        );
+        projectorDialogLayout.setVerticalGroup(
+            projectorDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(projectorDialogLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(laptioInfoLbl1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(projectorDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(lumensTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(projectorDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(acceptLapInfoBTN2)
+                    .addComponent(acceptLapInfoBTN1))
+                .addContainerGap(72, Short.MAX_VALUE))
+        );
+
+        laptopDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        laptopDialog.setMinimumSize(new java.awt.Dimension(324, 269));
+
+        laptioInfoLbl.setFont(new java.awt.Font("Blackout 2AM", 0, 24)); // NOI18N
         laptioInfoLbl.setText("Laptop information");
 
         osBox.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -67,38 +135,52 @@ public class AudiovisualRegister extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel1.setText("Operative System:");
 
-        jTextField1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        screenSizeTxt.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setText("Screen size (inches):");
 
         acceptLapInfoBTN.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         acceptLapInfoBTN.setText("Accept");
+        acceptLapInfoBTN.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                acceptLapInfoBTNMouseClicked(evt);
+            }
+        });
+
+        cancelLapInfoBTN2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        cancelLapInfoBTN2.setText("Cancel");
+        cancelLapInfoBTN2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cancelLapInfoBTN2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout laptopDialogLayout = new javax.swing.GroupLayout(laptopDialog.getContentPane());
         laptopDialog.getContentPane().setLayout(laptopDialogLayout);
         laptopDialogLayout.setHorizontalGroup(
             laptopDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(laptopDialogLayout.createSequentialGroup()
-                .addContainerGap(72, Short.MAX_VALUE)
+                .addContainerGap(32, Short.MAX_VALUE)
                 .addGroup(laptopDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(laptopDialogLayout.createSequentialGroup()
-                        .addGroup(laptopDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, laptopDialogLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(laptopDialogLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(osBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, laptopDialogLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(laptopDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(acceptLapInfoBTN)
-                            .addComponent(laptioInfoLbl))
-                        .addGap(63, 63, 63))))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(screenSizeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(laptopDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(laptopDialogLayout.createSequentialGroup()
+                            .addComponent(cancelLapInfoBTN2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(acceptLapInfoBTN))
+                        .addGroup(laptopDialogLayout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(osBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(35, Short.MAX_VALUE))
+            .addGroup(laptopDialogLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(laptioInfoLbl)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         laptopDialogLayout.setVerticalGroup(
             laptopDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,52 +194,12 @@ public class AudiovisualRegister extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(laptopDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
-                .addComponent(acceptLapInfoBTN)
+                    .addComponent(screenSizeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGroup(laptopDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(acceptLapInfoBTN)
+                    .addComponent(cancelLapInfoBTN2))
                 .addGap(28, 28, 28))
-        );
-
-        laptioInfoLbl1.setFont(new java.awt.Font("Blackout 2AM", 0, 36)); // NOI18N
-        laptioInfoLbl1.setText("Projector information");
-
-        jTextField2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-
-        jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel4.setText("Lumens:");
-
-        acceptLapInfoBTN1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        acceptLapInfoBTN1.setText("Accept");
-
-        javax.swing.GroupLayout projectorDialogLayout = new javax.swing.GroupLayout(projectorDialog.getContentPane());
-        projectorDialog.getContentPane().setLayout(projectorDialogLayout);
-        projectorDialogLayout.setHorizontalGroup(
-            projectorDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, projectorDialogLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(projectorDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(acceptLapInfoBTN1)
-                    .addComponent(laptioInfoLbl1))
-                .addGap(63, 63, 63))
-            .addGroup(projectorDialogLayout.createSequentialGroup()
-                .addGap(126, 126, 126)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        projectorDialogLayout.setVerticalGroup(
-            projectorDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(projectorDialogLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(laptioInfoLbl1)
-                .addGap(44, 44, 44)
-                .addGroup(projectorDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(acceptLapInfoBTN1)
-                .addGap(88, 88, 88))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -165,12 +207,12 @@ public class AudiovisualRegister extends javax.swing.JFrame {
         registerLbl.setFont(new java.awt.Font("Blackout 2AM", 0, 18)); // NOI18N
         registerLbl.setText("Audiovisual material registration");
 
-        titleLbl.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        titleLbl.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         titleLbl.setText("Model:");
 
         modelAVTxt.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
-        brandAVLbl.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        brandAVLbl.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         brandAVLbl.setText("Brand");
 
         showYearLbl.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -179,60 +221,89 @@ public class AudiovisualRegister extends javax.swing.JFrame {
 
         publisherTxt.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
-        yearLbl1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        yearLbl1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         yearLbl1.setText("Serial number:");
 
         registerBookBTN.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         registerBookBTN.setText("Accept");
+        registerBookBTN.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registerBookBTNMouseClicked(evt);
+            }
+        });
 
-        avTypeBOX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laptop", "Projector", "Other" }));
+        avTypeBOX.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        avTypeBOX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Type]", "Laptop", "Projector", "Other" }));
+        avTypeBOX.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                avTypeBOXItemStateChanged(evt);
+            }
+        });
+        avTypeBOX.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                avTypeBOXMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                avTypeBOXMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                avTypeBOXMouseReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(showYearLbl)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(yearLbl1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(registerBookBTN)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(avTypeBOX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(avTypeBOX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(modelAVTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
-                                .addComponent(titleLbl, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(brandAVLbl, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(brandAVTxt, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(publisherTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(registerLbl))
-                .addGap(47, 47, 47))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(modelAVTxt, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(titleLbl, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(brandAVLbl, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(brandAVTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(publisherTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(yearLbl1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(showYearLbl))
+                            .addComponent(registerBookBTN)
+                            .addComponent(registerLbl))
+                        .addContainerGap(47, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(registerLbl)
-                .addGap(26, 26, 26)
-                .addComponent(titleLbl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(modelAVTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(brandAVLbl)
-                .addGap(4, 4, 4)
-                .addComponent(brandAVTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(showYearLbl)
-                .addGap(67, 67, 67)
-                .addComponent(yearLbl1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(publisherTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(avTypeBOX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(133, 133, 133)
+                        .addComponent(showYearLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(18, 31, Short.MAX_VALUE)
+                        .addComponent(avTypeBOX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(titleLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(modelAVTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(brandAVLbl)
+                        .addGap(4, 4, 4)
+                        .addComponent(brandAVTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(yearLbl1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(publisherTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addComponent(registerBookBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -243,6 +314,83 @@ public class AudiovisualRegister extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_osBoxFocusGained
+
+    private void avTypeBOXMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_avTypeBOXMouseReleased
+        System.out.println("ASASFASF");
+        System.out.println(avTypeBOX.getSelectedItem().toString());
+    }//GEN-LAST:event_avTypeBOXMouseReleased
+
+    private void avTypeBOXMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_avTypeBOXMouseClicked
+        
+        
+    }//GEN-LAST:event_avTypeBOXMouseClicked
+
+    private void registerBookBTNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerBookBTNMouseClicked
+        System.out.println("Click");
+    }//GEN-LAST:event_registerBookBTNMouseClicked
+
+    private void avTypeBOXItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_avTypeBOXItemStateChanged
+        System.out.println("ASASFASF");
+        System.out.println(avTypeBOX.getSelectedItem().toString());
+        
+        if (avTypeBOX.getSelectedItem().toString().equals("Laptop")){
+            laptopDialog.setVisible(true);
+        }else if (avTypeBOX.getSelectedItem().toString().equals("Projector")){
+            projectorDialog.setVisible(true);
+        }
+    }//GEN-LAST:event_avTypeBOXItemStateChanged
+
+    private void avTypeBOXMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_avTypeBOXMousePressed
+        System.out.println("ASASFASF");
+        System.out.println(avTypeBOX.getSelectedItem().toString());
+        
+        if (avTypeBOX.getSelectedItem().toString().equals("Laptop")){
+            laptopDialog.pack();
+            laptopDialog.setVisible(true);
+        }else if (avTypeBOX.getSelectedItem().toString().equals("Projector")){
+            projectorDialog.setVisible(true);
+        }
+    }//GEN-LAST:event_avTypeBOXMousePressed
+
+    private void acceptLapInfoBTNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acceptLapInfoBTNMouseClicked
+        if (!screenSizeTxt.getText().isEmpty()) {
+            JOptionPane.showConfirmDialog(rootPane, "Sistema Operativo: " + 
+                osBox.getSelectedItem().toString() + "\n" + screenSizeTxt
+                        .getText());
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Must enter a screen size", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+            
+        
+        
+        laptopDialog.setVisible(false);
+        
+    }//GEN-LAST:event_acceptLapInfoBTNMouseClicked
+
+    private void cancelLapInfoBTN2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelLapInfoBTN2MouseClicked
+        laptopDialog.setVisible(false);
+        avTypeBOX.setSelectedIndex(0);
+    }//GEN-LAST:event_cancelLapInfoBTN2MouseClicked
+
+    private void acceptLapInfoBTN2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acceptLapInfoBTN2MouseClicked
+        projectorDialog.setVisible(false);
+        avTypeBOX.setSelectedIndex(0);
+    }//GEN-LAST:event_acceptLapInfoBTN2MouseClicked
+
+    private void acceptLapInfoBTN1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acceptLapInfoBTN1MouseClicked
+         lumensTxt.getText();
+         
+         if (!lumensTxt.getText().isEmpty()) {
+            JOptionPane.showConfirmDialog(rootPane, "Lumens: " + 
+                    lumensTxt.getText());
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Must enter a value", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+         
+        lumensTxt.setVisible(false);
+    }//GEN-LAST:event_acceptLapInfoBTN1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -255,7 +403,7 @@ public class AudiovisualRegister extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -285,24 +433,26 @@ public class AudiovisualRegister extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton acceptLapInfoBTN;
     private javax.swing.JButton acceptLapInfoBTN1;
+    private javax.swing.JButton acceptLapInfoBTN2;
     private javax.swing.JComboBox<String> avTypeBOX;
     private javax.swing.JLabel brandAVLbl;
     private javax.swing.JTextField brandAVTxt;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton cancelLapInfoBTN2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel laptioInfoLbl;
     private javax.swing.JLabel laptioInfoLbl1;
     private javax.swing.JDialog laptopDialog;
+    private javax.swing.JTextField lumensTxt;
     private javax.swing.JTextField modelAVTxt;
     private javax.swing.JComboBox<String> osBox;
     private javax.swing.JDialog projectorDialog;
     private javax.swing.JTextField publisherTxt;
     private javax.swing.JButton registerBookBTN;
     private javax.swing.JLabel registerLbl;
+    private javax.swing.JTextField screenSizeTxt;
     private javax.swing.JLabel showYearLbl;
     private javax.swing.JLabel titleLbl;
     private javax.swing.JLabel yearLbl1;

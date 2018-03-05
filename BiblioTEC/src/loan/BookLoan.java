@@ -17,7 +17,8 @@ public class BookLoan extends Loan{
     
     private materialRegistration.Book bookLoaned;
     
-    public BookLoan(int _ID, Student _student, Date _date,materialRegistration.Book _bookLoaned ) {
+    public BookLoan(int _ID, Student _student, Date _date,
+            materialRegistration.Book _bookLoaned ) {
         super(_ID, _student, _date);
         this.bookLoaned = _bookLoaned;
     }

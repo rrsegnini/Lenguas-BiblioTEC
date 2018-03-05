@@ -29,11 +29,19 @@ public class Library {
     List<List<Book>> bookList;
     List<Student> studentsList = new ArrayList<>();
     List<Loan> loansList = new ArrayList<>(); 
-    
+    private static Library libraryInstance;
     
     
     public Library() {this.bookList = new ArrayList<>();
-}
+    }
+    
+    public static Library getInstance(){
+        if (libraryInstance == null){
+            return new Library();
+        }else{
+            return libraryInstance;
+        }
+    }
     
     public void searchBook(String _letters, int _counter) {
         List<Book> books = bookList.get(_counter);
@@ -64,6 +72,12 @@ public class Library {
         File file = new File("/usr/local/bin/geeks");
         StudentFile studentFile = new StudentFile(file);
         Student newStudent = new Student(_id,_name,_lastName, _career);
+        return studentFile.addEndRecord(newStudent);
+    }
+    
+    public boolean registerStudent(Student newStudent) throws IOException {
+        File file = new File("/usr/local/bin/geeks");
+        StudentFile studentFile = new StudentFile(file);
         return studentFile.addEndRecord(newStudent);
     }
     
