@@ -21,12 +21,16 @@ public class BookFile {
     private int regsQuantity;//me indica la cantidad de registros
     private int regSize;
     private String myFilePath;
+    private static BookFile fileInstance = null;
     
     
     public BookFile(File file) throws IOException{
         start(file);
+        fileInstance = this;
     }
-
+    public static BookFile getInstance(){
+        return fileInstance;
+    }
     private void start(File file) throws IOException  {
             //almaceno la ruta
         myFilePath = file.getPath();
@@ -99,6 +103,7 @@ public class BookFile {
         }
         return books;
     }
+     
      
     
     /**

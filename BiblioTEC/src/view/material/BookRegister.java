@@ -5,6 +5,8 @@
  */
 package view.material;
 
+import java.io.File;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -208,6 +210,23 @@ public class BookRegister extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_yearTxtKeyReleased
 
+    private void printBooks(List<materialRegistration.Book> books){
+        for (int i = 0; i < books.size(); i++){
+            System.out.println("Title: " + books.get(i).getName() + 
+                    " Author: " + books.get(i).getAuthor() + 
+                    " Year: " + books.get(i).getYear());
+        }
+    }
+    
+    private void resetValues(){
+        titleTxt.setText("");
+        authorTxt.setText("");
+        yearTxt.setText("");
+        ISBN.setText("");
+        physicalRdoBtn.setSelected(false);
+        digitalRdoBtn.setSelected(false);
+        
+    }
     private void registerBookBTNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerBookBTNMouseClicked
        String title = titleTxt.getText();
        String author = authorTxt.getText();
@@ -229,14 +248,26 @@ public class BookRegister extends javax.swing.JFrame {
             /*materialRegistration.Book newBook 
                     = new materialRegistration.Book(title, author, year, type, isbn);*/
             try{
-            domain.Library.getInstance()
-                    .registerBook(title, author, year, type, isbn);
+                domain.Library.getInstance()
+                        .registerBook(title, author, year, type, isbn);
+                JOptionPane.showMessageDialog(rootPane, "Book added", "Success", 
+                        JOptionPane.INFORMATION_MESSAGE);
+                
+                resetValues();
+                
             }catch(Exception e){
                 System.err.println(e.getMessage());
             }
        }else{
             JOptionPane.showMessageDialog(rootPane, "Some values are missing", 
                     "Error", JOptionPane.ERROR_MESSAGE);
+       }
+       
+       
+       try{
+        printBooks(file.BookFile.getInstance().getAllBooks());
+       }catch(Exception e){
+           System.err.println(e.getMessage());
        }
     }//GEN-LAST:event_registerBookBTNMouseClicked
 
