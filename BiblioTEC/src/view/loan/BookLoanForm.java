@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.Document;
 import materialRegistration.Book;
 import util.Tuple;
@@ -29,11 +30,13 @@ public class BookLoanForm extends javax.swing.JFrame {
      */
     
     private int counter = 0;
-    //private int lettersLength = 0;
+    private int lettersLength = 0;
     private Library library = new Library(); 
-    private List<Tuple> searches = new ArrayList<>();
+    DefaultTableModel model;
+    //private List<Tuple> searches = new ArrayList<>();
    public BookLoanForm() {
         initComponents();
+        model = (DefaultTableModel) this.searchBookTable.getModel();
     }
 
     /**
@@ -52,7 +55,7 @@ public class BookLoanForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        searchBookTable = new javax.swing.JTable();
         searchBookTextField = new javax.swing.JTextField();
 
         jLabel1.setText("jLabel1");
@@ -74,7 +77,7 @@ public class BookLoanForm extends javax.swing.JFrame {
 
         jButton1.setText("Take book on a loan");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        searchBookTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -93,12 +96,17 @@ public class BookLoanForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(searchBookTable);
 
         searchBookTextField.setText("Buscar...");
         searchBookTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchBookTextFieldActionPerformed(evt);
+            }
+        });
+        searchBookTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchBookTextFieldKeyReleased(evt);
             }
         });
 
@@ -158,15 +166,8 @@ public class BookLoanForm extends javax.swing.JFrame {
 
     private void searchBookTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBookTextFieldActionPerformed
         // TODO add your handling code here:
-        
-        //
-        if (searches.size() != 0) {
-            if (Tuple.ifLowest(searches, this.searchBookTextField.getText().length())) {
-                // es decir, quiere buscar algo que aun no se encontraba
-            }
-        }
-        
-        
+        // este codigo va en el listener, es ejecutado cada vez que cambia 
+      
         if (this.counter == 0) {
             File file = new File("./files/bookFile.dat");
             try {
@@ -177,17 +178,20 @@ public class BookLoanForm extends javax.swing.JFrame {
                 
                 //agrega una lista de listas de libros
                 this.library.setBookList(bookList); //bookFile.getBooks(letters);
-                bookList = this.library.getBookList();
+                
                 
                 //longitud hasta el momento de letras, si esta disminuye, deben de borrarse
                 //de esa lista 
                 //si la cantidad de letras cambia, de debe de ver cuantas 
-                searches.add(new Tuple(this.counter,letters.length()));
+                this.lettersLength = letters.length();
                 
                 
                 //agrega los libros a la lista de listas. Donde cada una contiene
                //la ultima busqueda y de esa ultima se hara la siguiente. 
-                bookList.add(books);
+               library.addBooksToList(books);
+                
+                //populate JTable
+                
                 
                 counter++;
             } catch (IOException ex) {
@@ -195,12 +199,27 @@ public class BookLoanForm extends javax.swing.JFrame {
             }
         }
         else {
-            //cada vez que entra aca, verifica a ver si hubo un cambio a la cantidad de letras
-            // y en el contador, en la lista de busquedas. 
-            if ()
+            
+            if (this.lettersLength > this.searchBookTextField.getText().length()) {
+                this.library.deleteBooksList(counter - 1);
+                counter--;
+            }
+            
+            //retorna la nueva busqueda 
+            List<Book> newBookList = this.library.searchBook(this.searchBookTextField.getText(), counter);
+            
+            
+            //agrega e=la nueva lista a la lista de listas
+            library.addBooksToList(newBookList);
+            
+            //populate JTable
         
         }
     }//GEN-LAST:event_searchBookTextFieldActionPerformed
+
+    private void searchBookTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchBookTextFieldKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchBookTextFieldKeyReleased
     
     
     /**
@@ -248,7 +267,7 @@ public class BookLoanForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable searchBookTable;
     private javax.swing.JTextField searchBookTextField;
     private javax.swing.JTextField studentIDtxt;
     // End of variables declaration//GEN-END:variables

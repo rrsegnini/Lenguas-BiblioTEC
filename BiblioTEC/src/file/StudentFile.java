@@ -39,7 +39,7 @@ public class StudentFile {
         
         //tamanno maximo de los registros dentro de esta 
         //clase
-        this.regSize = 140;
+        this.regSize = 100;
         
         //una validacion basica
         if(file.exists() && !file.isFile()){
@@ -163,25 +163,7 @@ public class StudentFile {
         return null;
     }
     
-    /*public List<Student> getStudents(String _letters) {
-        Student myStudent;
-        
-        //buscar el registro para la eliminacion
-        for(int i = 0; i < regsQuantity; i++){
-            
-            //obtengo a la persona de esa posicion
-            myStudent = this.getStudent(i);
-                
-            if(myStudent.getName().equalsIgnoreCase(_name)){
 
-                return myStudent;
-            }
-        }
-        
-        return null;
-    }*/
-    
-    
     /**
      * consulta todos los registros de mi archivo
      * @return una lista de objetos tipo Person

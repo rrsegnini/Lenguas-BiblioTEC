@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import loan.BookLoan;
-import loan.BookReturn;
 import loan.Loan;
 import materialRegistration.Book;
 import materialRegistration.BookType;
@@ -44,7 +43,11 @@ public class Library {
         }
     }
     
-    public void searchBook(String _letters, int _counter) {
+    public void addBooksToList(List<Book> _books) {
+        this.bookList.add(_books);
+    }
+    
+    public List<Book>  searchBook(String _letters, int _counter) {
         List<Book> books = bookList.get(_counter);
         Book book;
         int pos = _letters.length();
@@ -55,6 +58,7 @@ public class Library {
             }
             
         }
+        return books;
     }
     
     public boolean registerBook(String _name, String _author, int _year, 
