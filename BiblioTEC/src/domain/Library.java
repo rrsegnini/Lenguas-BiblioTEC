@@ -26,10 +26,11 @@ import studentRegistration.Student;
  * @author danielalvarado
  */
 public class Library {
-    List<List<Book>> bookList;
+    List<List<Book>> bookList = new ArrayList<>();
     List<Student> studentsList = new ArrayList<>();
     List<Loan> loansList = new ArrayList<>(); 
     private static Library libraryInstance;
+    
     
     
     public Library() {this.bookList = new ArrayList<>();
@@ -88,7 +89,44 @@ public class Library {
             BookLoan newBookLoan = new BookLoan(1,_student,actualDate,_book);
         }
     }
+
+    public List<List<Book>> getBookList() {
+        return bookList;
+    }
+
+    public void setBookList(List<List<Book>> bookList) {
+        this.bookList = bookList;
+    }
+
+    public List<Student> getStudentsList() {
+        return studentsList;
+    }
+
+    public void setStudentsList(List<Student> studentsList) {
+        this.studentsList = studentsList;
+    }
+
+    public List<Loan> getLoansList() {
+        return loansList;
+    }
+
+    public void setLoansList(List<Loan> loansList) {
+        this.loansList = loansList;
+    }
     
+    public boolean deleteBooksList(int _pos) {
+        try {this.bookList.remove(_pos);
+            return true;}
+        catch (Exception e) {
+            System.out.print("ERROR AL BORRAR LIBRO DE LA LISTA");
+            return false;
+        }
+    }
     
+    public void deleteALLBooks() {
+        while (!this.bookList.isEmpty()) {
+            this.bookList.remove(0);
+        }
+    }
     
 }

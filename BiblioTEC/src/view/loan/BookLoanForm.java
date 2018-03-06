@@ -5,6 +5,19 @@
  */
 package view.loan;
 
+import domain.Library;
+import file.BookFile;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
+import materialRegistration.Book;
+import util.Tuple;
 /**
  *
  * @author CASA
@@ -14,7 +27,12 @@ public class BookLoanForm extends javax.swing.JFrame {
     /**
      * Creates new form BookLoanForm
      */
-    public BookLoanForm() {
+    
+    private int counter = 0;
+    //private int lettersLength = 0;
+    private Library library = new Library(); 
+    private List<Tuple> searches = new ArrayList<>();
+   public BookLoanForm() {
         initComponents();
     }
 
@@ -35,7 +53,7 @@ public class BookLoanForm extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        searchBookTextField = new javax.swing.JTextField();
 
         jLabel1.setText("jLabel1");
 
@@ -77,7 +95,12 @@ public class BookLoanForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jTextField1.setText("Buscar...");
+        searchBookTextField.setText("Buscar...");
+        searchBookTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBookTextFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,7 +115,7 @@ public class BookLoanForm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(searchBookTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(studentIDtxt)
@@ -110,7 +133,7 @@ public class BookLoanForm extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(searchBookTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(53, 53, 53)
                         .addComponent(jLabel4)
@@ -133,6 +156,53 @@ public class BookLoanForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_studentIDtxtActionPerformed
 
+    private void searchBookTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBookTextFieldActionPerformed
+        // TODO add your handling code here:
+        
+        //
+        if (searches.size() != 0) {
+            if (Tuple.ifLowest(searches, this.searchBookTextField.getText().length())) {
+                // es decir, quiere buscar algo que aun no se encontraba
+            }
+        }
+        
+        
+        if (this.counter == 0) {
+            File file = new File("./files/bookFile.dat");
+            try {
+                BookFile bookFile = new BookFile(file);
+                String letters = this.searchBookTextField.getText();
+                List<List<Book>> bookList = new ArrayList<>();
+                List<Book> books = bookFile.getBooks(letters);
+                
+                //agrega una lista de listas de libros
+                this.library.setBookList(bookList); //bookFile.getBooks(letters);
+                bookList = this.library.getBookList();
+                
+                //longitud hasta el momento de letras, si esta disminuye, deben de borrarse
+                //de esa lista 
+                //si la cantidad de letras cambia, de debe de ver cuantas 
+                searches.add(new Tuple(this.counter,letters.length()));
+                
+                
+                //agrega los libros a la lista de listas. Donde cada una contiene
+               //la ultima busqueda y de esa ultima se hara la siguiente. 
+                bookList.add(books);
+                
+                counter++;
+            } catch (IOException ex) {
+                Logger.getLogger(BookLoanForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else {
+            //cada vez que entra aca, verifica a ver si hubo un cambio a la cantidad de letras
+            // y en el contador, en la lista de busquedas. 
+            if ()
+        
+        }
+    }//GEN-LAST:event_searchBookTextFieldActionPerformed
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -167,6 +237,9 @@ public class BookLoanForm extends javax.swing.JFrame {
             }
         });
     }
+    
+    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -176,7 +249,10 @@ public class BookLoanForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField searchBookTextField;
     private javax.swing.JTextField studentIDtxt;
     // End of variables declaration//GEN-END:variables
+
+    
+
 }
