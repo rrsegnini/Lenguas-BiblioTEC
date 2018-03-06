@@ -49,16 +49,21 @@ public class Library {
     
     public List<Book>  searchBook(String _letters, int _counter) {
         List<Book> books = bookList.get(_counter);
+        List<Book> newBookList = new ArrayList<>();
         Book book;
         int pos = _letters.length();
         for (int i = 0; i < books.size();i++) {
             book = books.get(i);
-            if (book.getName().substring(0, pos) == _letters) {
-                books.add(book);
+            String name = book.getName();
+            String part = name.substring(0, pos).toUpperCase().trim();
+            String lettersUp = _letters.toUpperCase().trim();
+            if (part.equals(lettersUp)) {
+                newBookList.add(book);
             }
             
+            
         }
-        return books;
+        return newBookList;
     }
     
     public boolean registerBook(String _name, String _author, int _year, 

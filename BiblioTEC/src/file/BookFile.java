@@ -97,7 +97,9 @@ public class BookFile {
             //obtengo a la persona de esa posicion
             book = this.getBook(i);
             String name = book.getName();
-            if (name.substring(0, pos) == _letters) {
+            String part = name.substring(0, pos).toUpperCase().trim();
+            String lettersUp = _letters.toUpperCase().trim();
+            if (part.equals(lettersUp)) {
                 books.add(book);
             }
         }

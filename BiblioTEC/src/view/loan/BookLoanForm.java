@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -43,10 +44,11 @@ public class BookLoanForm extends javax.swing.JFrame {
    private void loadJTable() {
        
        model = (DefaultTableModel) this.searchBookTable.getModel();
-       model.addColumn("Name");
-       model.addColumn("Author");
-       model.addColumn("ISBN");
-       model.addColumn("Year");
+       model.setRowCount(0);
+       //model.addColumn("Name");
+      // model.addColumn("Author");
+       //model.addColumn("ISBN");
+       //model.addColumn("Year");
        
        for (int i = 0; i < books.size(); i++){    
             model.addRow(new Object[]{
@@ -122,7 +124,6 @@ public class BookLoanForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(searchBookTable);
 
-        searchBookTextField.setText("Buscar...");
         searchBookTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchBookTextFieldActionPerformed(evt);
@@ -192,14 +193,19 @@ public class BookLoanForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         // este codigo va en el listener, es ejecutado cada vez que cambia 
       
-        if (this.counter == 0) {
+        
+    }//GEN-LAST:event_searchBookTextFieldActionPerformed
+
+    private void searchBookTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchBookTextFieldKeyReleased
+        // TODO add your handling code here:
+        if (this.counter == 0 && this.searchBookTextField.getText().trim()  != "") {
             File file = new File("./files/bookFile.dat");
             try {
                 BookFile bookFile = new BookFile(file);
                 String letters = this.searchBookTextField.getText();
                 List<List<Book>> bookList = new ArrayList<>();
                 this.books = bookFile.getBooks(letters);
-                
+                System.out.print("ENTER");
                 //agrega una lista de listas de libros
                 this.library.setBookList(bookList); //bookFile.getBooks(letters);
                 
@@ -228,24 +234,34 @@ public class BookLoanForm extends javax.swing.JFrame {
             if (this.lettersLength > this.searchBookTextField.getText().length()) {
                 this.library.deleteBooksList(counter - 1);
                 counter--;
+            } else if (!this.library.getBookList().get(counter-1).isEmpty()) {
+                //retorna la nueva busqueda 
+                List<Book> newBookList = this.library.searchBook(this.searchBookTextField.getText(), counter-1);
+
+
+                //agrega e=la nueva lista a la lista de listas
+                library.addBooksToList(newBookList);
+                this.repaint();
+                
+                //settea la nueva lista en la lista utilizada para hacer la jtable
+                this.books = newBookList;
+
+                //populate JTable
+               
+                 this.loadJTable();
+            
+            
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "No Books", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                counter = 0;
+                this.library.deleteALLBooks();
+                
             }
             
-            //retorna la nueva busqueda 
-            List<Book> newBookList = this.library.searchBook(this.searchBookTextField.getText(), counter);
             
-            
-            //agrega e=la nueva lista a la lista de listas
-            library.addBooksToList(newBookList);
-            this.repaint();
-           
-            //populate JTable
-             this.loadJTable();
         
         }
-    }//GEN-LAST:event_searchBookTextFieldActionPerformed
-
-    private void searchBookTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchBookTextFieldKeyReleased
-        // TODO add your handling code here:
     }//GEN-LAST:event_searchBookTextFieldKeyReleased
     
     
