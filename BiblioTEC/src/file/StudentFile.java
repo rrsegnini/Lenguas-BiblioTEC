@@ -162,8 +162,38 @@ public class StudentFile {
         
         return null;
     }
+<<<<<<< HEAD
     
 
+=======
+    /**
+     * 
+     * @param _name The name of the student
+     * @return The Student object with the same name.
+     */
+    public Student getStudent(String _name) {
+        Student myStudent;
+        
+        try{
+        //buscar el registro para la eliminacion
+        for(int i = 0; i < regsQuantity; i++){
+            
+            //obtengo a la persona de esa posicion
+            myStudent = this.getStudent(i);
+                
+            if(myStudent.getName().equalsIgnoreCase(_name)){
+
+                return myStudent;
+            }
+        }
+        }catch(Exception e){
+        }
+        
+        return null;
+    }
+    
+    
+>>>>>>> origin/master
     /**
      * consulta todos los registros de mi archivo
      * @return una lista de objetos tipo Person

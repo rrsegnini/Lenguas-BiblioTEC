@@ -199,6 +199,7 @@ public class BookLoanForm extends javax.swing.JFrame {
             }
         }
         else {
+<<<<<<< HEAD
             
             if (this.lettersLength > this.searchBookTextField.getText().length()) {
                 this.library.deleteBooksList(counter - 1);
@@ -213,6 +214,11 @@ public class BookLoanForm extends javax.swing.JFrame {
             library.addBooksToList(newBookList);
             
             //populate JTable
+=======
+            //cada vez que entra aca, verifica a ver si hubo un cambio a la cantidad de letras
+            // y en el contador, en la lista de busquedas. 
+        /// //if ()
+>>>>>>> origin/master
         
         }
     }//GEN-LAST:event_searchBookTextFieldActionPerformed

@@ -202,7 +202,7 @@ public class AudiovisualRegister extends javax.swing.JFrame {
                 .addGap(28, 28, 28))
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         registerLbl.setFont(new java.awt.Font("Blackout 2AM", 0, 18)); // NOI18N
         registerLbl.setText("Audiovisual material registration");
