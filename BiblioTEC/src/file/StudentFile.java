@@ -162,10 +162,15 @@ public class StudentFile {
         
         return null;
     }
-    
-    /*public List<Student> getStudents(String _letters) {
+    /**
+     * 
+     * @param _name The name of the student
+     * @return The Student object with the same name.
+     */
+    public Student getStudent(String _name) {
         Student myStudent;
         
+        try{
         //buscar el registro para la eliminacion
         for(int i = 0; i < regsQuantity; i++){
             
@@ -177,9 +182,11 @@ public class StudentFile {
                 return myStudent;
             }
         }
+        }catch(Exception e){
+        }
         
         return null;
-    }*/
+    }
     
     
     /**

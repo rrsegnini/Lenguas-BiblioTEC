@@ -197,7 +197,7 @@ public class BookLoanForm extends javax.swing.JFrame {
         else {
             //cada vez que entra aca, verifica a ver si hubo un cambio a la cantidad de letras
             // y en el contador, en la lista de busquedas. 
-            if ()
+        /// //if ()
         
         }
     }//GEN-LAST:event_searchBookTextFieldActionPerformed

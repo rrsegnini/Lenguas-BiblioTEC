@@ -60,7 +60,10 @@ public class Library {
     public boolean registerBook(String _name, String _author, int _year, 
             BookType _type, String _isbn) throws IOException {
         //escribe el libro en el archivo
-        File file = new File("/usr/local/bin/geeks");
+        //String path = new File(".").getCanonicalPath();
+        //File file = new File(path);
+        File file = new File("./files/bookFile.dat");
+        file.getParentFile().mkdirs();
         BookFile bookFile = new BookFile(file);
         //crea el objeto libro para poder agregarlo en el archivo
         Book book = new Book( _name,  _author,  _year, _type,  _isbn);
@@ -70,14 +73,18 @@ public class Library {
     }
     
     public boolean registerStudent(int _id, String _name, String _lastName, Career _career) throws IOException {
-        File file = new File("/usr/local/bin/geeks");
+        //File file = new File("/usr/local/bin/geeks");
+        File file = new File("./files/bookFile.dat");
+        file.getParentFile().mkdirs();
         StudentFile studentFile = new StudentFile(file);
         Student newStudent = new Student(_id,_name,_lastName, _career);
         return studentFile.addEndRecord(newStudent);
     }
     
     public boolean registerStudent(Student newStudent) throws IOException {
-        File file = new File("/usr/local/bin/geeks");
+        //File file = new File("/usr/local/bin/geeks");
+        File file = new File("./files/bookFile.dat");
+        file.getParentFile().mkdirs();
         StudentFile studentFile = new StudentFile(file);
         return studentFile.addEndRecord(newStudent);
     }

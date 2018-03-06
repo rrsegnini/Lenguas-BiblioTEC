@@ -5,6 +5,8 @@
  */
 package view.material;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author CASA
@@ -36,7 +38,7 @@ public class BookRegister extends javax.swing.JFrame {
         authorLbl1 = new javax.swing.JLabel();
         yearLbl = new javax.swing.JLabel();
         showYearLbl = new javax.swing.JLabel();
-        authorTxt1 = new javax.swing.JTextField();
+        authorTxt = new javax.swing.JTextField();
         publisherTxt = new javax.swing.JTextField();
         yearLbl1 = new javax.swing.JLabel();
         yearTxt = new javax.swing.JTextField();
@@ -45,7 +47,7 @@ public class BookRegister extends javax.swing.JFrame {
         physicalRdoBtn = new javax.swing.JRadioButton();
         yearLbl2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         registerLbl.setFont(new java.awt.Font("Blackout 2AM", 0, 18)); // NOI18N
         registerLbl.setText("Book registration");
@@ -73,7 +75,7 @@ public class BookRegister extends javax.swing.JFrame {
 
         showYearLbl.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
-        authorTxt1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        authorTxt.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
         publisherTxt.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
@@ -92,6 +94,11 @@ public class BookRegister extends javax.swing.JFrame {
 
         registerBookBTN.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         registerBookBTN.setText("Accept");
+        registerBookBTN.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registerBookBTNMouseClicked(evt);
+            }
+        });
 
         buttonGroup1.add(digitalRdoBtn);
         digitalRdoBtn.setText("Digital");
@@ -140,7 +147,7 @@ public class BookRegister extends javax.swing.JFrame {
                                         .addComponent(titleLbl, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(authorLbl, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(ISBN, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(authorTxt1, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(authorTxt, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(publisherTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addGap(47, 47, 47))
         );
@@ -156,8 +163,7 @@ public class BookRegister extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(authorLbl)
                 .addGap(4, 4, 4)
-                .addComponent(authorTxt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(authorTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
@@ -175,7 +181,7 @@ public class BookRegister extends javax.swing.JFrame {
                 .addComponent(yearLbl1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(publisherTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(authorLbl1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ISBN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -201,6 +207,38 @@ public class BookRegister extends javax.swing.JFrame {
                     .substring(0, yearTxt.getText().length()-1));
         }
     }//GEN-LAST:event_yearTxtKeyReleased
+
+    private void registerBookBTNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerBookBTNMouseClicked
+       String title = titleTxt.getText();
+       String author = authorTxt.getText();
+       int year = 0;
+       try{
+       year = Integer.parseInt(yearTxt.getText());
+       }catch(Exception e){
+           year=0;
+       }
+       materialRegistration.BookType type 
+               = materialRegistration.BookType.DIGITAL;
+       String isbn = ISBN.getText();
+       
+       if (physicalRdoBtn.isSelected()){
+           type = type.PHYSICAL;
+       }
+       
+       if (!title.isEmpty()&&!author.isEmpty()&&year!= 0 && !isbn.isEmpty()){
+            /*materialRegistration.Book newBook 
+                    = new materialRegistration.Book(title, author, year, type, isbn);*/
+            try{
+            domain.Library.getInstance()
+                    .registerBook(title, author, year, type, isbn);
+            }catch(Exception e){
+                System.err.println(e.getMessage());
+            }
+       }else{
+            JOptionPane.showMessageDialog(rootPane, "Some values are missing", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+       }
+    }//GEN-LAST:event_registerBookBTNMouseClicked
 
     /**
      * @param args the command line arguments
@@ -242,7 +280,7 @@ public class BookRegister extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField ISBN;
     private javax.swing.JLabel authorLbl;
     private javax.swing.JLabel authorLbl1;
-    private javax.swing.JTextField authorTxt1;
+    private javax.swing.JTextField authorTxt;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JRadioButton digitalRdoBtn;
     private javax.swing.JRadioButton physicalRdoBtn;
