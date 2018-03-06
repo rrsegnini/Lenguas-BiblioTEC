@@ -38,7 +38,7 @@ public class BookReturnForm extends javax.swing.JFrame {
         loanedBooksTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         studentIDbox.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         studentIDbox.addKeyListener(new java.awt.event.KeyAdapter() {
