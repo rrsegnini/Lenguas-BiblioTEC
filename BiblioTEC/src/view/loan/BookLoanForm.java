@@ -34,11 +34,35 @@ public class BookLoanForm extends javax.swing.JFrame {
     private Library library = new Library(); 
     DefaultTableModel model;
     //private List<Tuple> searches = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
    public BookLoanForm() {
         initComponents();
-        model = (DefaultTableModel) this.searchBookTable.getModel();
+        
     }
 
+   private void loadJTable() {
+       
+       model = (DefaultTableModel) this.searchBookTable.getModel();
+       model.addColumn("Name");
+       model.addColumn("Author");
+       model.addColumn("ISBN");
+       model.addColumn("Year");
+       
+       for (int i = 0; i < books.size(); i++){    
+            model.addRow(new Object[]{
+                books.get(i).getName(),
+                books.get(i).getAuthor(),
+                books.get(i).getISBN(),
+                books.get(i).getYear()
+            });
+        }
+
+        searchBookTable.setModel(model);
+       
+         
+   }
+   
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -174,7 +198,7 @@ public class BookLoanForm extends javax.swing.JFrame {
                 BookFile bookFile = new BookFile(file);
                 String letters = this.searchBookTextField.getText();
                 List<List<Book>> bookList = new ArrayList<>();
-                List<Book> books = bookFile.getBooks(letters);
+                this.books = bookFile.getBooks(letters);
                 
                 //agrega una lista de listas de libros
                 this.library.setBookList(bookList); //bookFile.getBooks(letters);
@@ -189,7 +213,8 @@ public class BookLoanForm extends javax.swing.JFrame {
                 //agrega los libros a la lista de listas. Donde cada una contiene
                //la ultima busqueda y de esa ultima se hara la siguiente. 
                library.addBooksToList(books);
-                
+               
+               this.loadJTable();
                 //populate JTable
                 
                 
@@ -199,8 +224,7 @@ public class BookLoanForm extends javax.swing.JFrame {
             }
         }
         else {
-<<<<<<< HEAD
-            
+
             if (this.lettersLength > this.searchBookTextField.getText().length()) {
                 this.library.deleteBooksList(counter - 1);
                 counter--;
@@ -212,13 +236,10 @@ public class BookLoanForm extends javax.swing.JFrame {
             
             //agrega e=la nueva lista a la lista de listas
             library.addBooksToList(newBookList);
-            
+            this.repaint();
+           
             //populate JTable
-=======
-            //cada vez que entra aca, verifica a ver si hubo un cambio a la cantidad de letras
-            // y en el contador, en la lista de busquedas. 
-        /// //if ()
->>>>>>> origin/master
+             this.loadJTable();
         
         }
     }//GEN-LAST:event_searchBookTextFieldActionPerformed

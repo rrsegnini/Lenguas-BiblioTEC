@@ -162,10 +162,8 @@ public class StudentFile {
         
         return null;
     }
-<<<<<<< HEAD
-    
 
-=======
+    
     /**
      * 
      * @param _name The name of the student
@@ -192,8 +190,6 @@ public class StudentFile {
         return null;
     }
     
-    
->>>>>>> origin/master
     /**
      * consulta todos los registros de mi archivo
      * @return una lista de objetos tipo Person
