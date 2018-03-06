@@ -183,6 +183,24 @@ public class BookFile {
         return null;
     }
     
+    /*public Book getBooktByName(String _name) throws IOException {
+        Book book;
+        
+        //buscar el registro para la eliminacion
+        for(int i = 0; i < regsQuantity; i++){
+            
+            //obtengo a la persona de esa posicion
+            book = this.getBook(i);
+                
+            if(book.getName().equalsIgnoreCase(_name)){
+
+                return book;
+            }
+        }
+        
+        return null;
+    }*/
+    
     
     
     

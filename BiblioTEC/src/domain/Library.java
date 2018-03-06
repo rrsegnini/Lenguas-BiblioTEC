@@ -125,6 +125,7 @@ public class Library {
     public List<Loan> getLoansList() {
         return loansList;
     }
+   
 
     public void setLoansList(List<Loan> loansList) {
         this.loansList = loansList;
@@ -143,6 +144,21 @@ public class Library {
         while (!this.bookList.isEmpty()) {
             this.bookList.remove(0);
         }
+    }
+    
+    /**
+     * Looks for the loans of a student
+     * @param ID Student ID
+     * @return A list of loans
+     */
+    public List<Loan> getLoansByStudentID(int ID) {
+        List<Loan> loans = new ArrayList<>();
+        for (int i = 0; i < loansList.size(); i++){
+            if (loansList.get(i).getStudent().getID() == ID){
+                loans.add(loansList.get(i));
+            }
+        }
+        return loansList;
     }
     
 }
