@@ -57,7 +57,7 @@ public class Library {
             String name = book.getName();
             String part = name.substring(0, pos).toUpperCase().trim();
             String lettersUp = _letters.toUpperCase().trim();
-            if (part.equals(lettersUp)) {
+            if (part.equals(lettersUp)&& !book.onLoan()) {
                 newBookList.add(book);
             }
             

@@ -99,7 +99,7 @@ public class BookFile {
             String name = book.getName();
             String part = name.substring(0, pos).toUpperCase().trim();
             String lettersUp = _letters.toUpperCase().trim();
-            if (part.equals(lettersUp)) {
+            if (part.equals(lettersUp) && !book.onLoan()) {
                 books.add(book);
             }
         }
@@ -208,6 +208,7 @@ public class BookFile {
         return books;
     }//fin metodo
     
+    //public Book getOneBook(int )
     
     public boolean deleteRecord(String name) throws IOException{
         Book book;

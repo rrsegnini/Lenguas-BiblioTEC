@@ -40,16 +40,20 @@ public class BookLoanForm extends javax.swing.JFrame {
         initComponents();
         
     }
+   
+   
+   private void cleanTable() {
+       model = (DefaultTableModel) this.searchBookTable.getModel();
+       model.setRowCount(0);
+       searchBookTable.setModel(model);
+   
+   }
 
    private void loadJTable() {
        
        model = (DefaultTableModel) this.searchBookTable.getModel();
        model.setRowCount(0);
-       //model.addColumn("Name");
-      // model.addColumn("Author");
-       //model.addColumn("ISBN");
-       //model.addColumn("Year");
-       
+        
        for (int i = 0; i < books.size(); i++){    
             model.addRow(new Object[]{
                 books.get(i).getName(),
@@ -79,7 +83,7 @@ public class BookLoanForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         studentIDtxt = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        loanBookButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         searchBookTable = new javax.swing.JTable();
         searchBookTextField = new javax.swing.JTextField();
@@ -101,7 +105,12 @@ public class BookLoanForm extends javax.swing.JFrame {
 
         jLabel4.setText("Student ID:");
 
-        jButton1.setText("Take book on a loan");
+        loanBookButton.setText("Take book on a loan");
+        loanBookButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loanBookButtonMouseClicked(evt);
+            }
+        });
 
         searchBookTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -155,7 +164,7 @@ public class BookLoanForm extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))))
+                            .addComponent(loanBookButton, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -178,7 +187,7 @@ public class BookLoanForm extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(258, 258, 258)
-                        .addComponent(jButton1)))
+                        .addComponent(loanBookButton)))
                 .addContainerGap())
         );
 
@@ -198,7 +207,12 @@ public class BookLoanForm extends javax.swing.JFrame {
 
     private void searchBookTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchBookTextFieldKeyReleased
         // TODO add your handling code here:
-        if (this.counter == 0 && this.searchBookTextField.getText().trim()  != "") {
+        if ("".equals(this.searchBookTextField.getText().trim())) {
+            this.cleanTable();
+            counter = 0;
+            this.library.deleteALLBooks();
+        }
+        else if (this.counter == 0 && this.searchBookTextField.getText().trim()  != "") {
             File file = new File("./files/bookFile.dat");
             try {
                 BookFile bookFile = new BookFile(file);
@@ -263,6 +277,19 @@ public class BookLoanForm extends javax.swing.JFrame {
         
         }
     }//GEN-LAST:event_searchBookTextFieldKeyReleased
+
+    private void loanBookButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loanBookButtonMouseClicked
+        // TODO add your handling code here:
+        int rowSelected = this.searchBookTable.getSelectedRow();
+        
+        // si efectivamente hay algo seleccionado en la tabla
+        if (rowSelected != -1) {
+            //table.getValueAt(table.getSelectedRow(), 0).toString());\
+            //Obtener el nombre primero 
+            
+        
+        }
+    }//GEN-LAST:event_loanBookButtonMouseClicked
     
     
     /**
@@ -304,12 +331,12 @@ public class BookLoanForm extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton loanBookButton;
     private javax.swing.JTable searchBookTable;
     private javax.swing.JTextField searchBookTextField;
     private javax.swing.JTextField studentIDtxt;
