@@ -5,6 +5,8 @@
  */
 package materialRegistration;
 
+import file.AudiovisualFile;
+
 /**
  *
  * @author danielalvarado
@@ -19,7 +21,8 @@ public class Audiovisual implements Material{
     public Audiovisual() {
     }
     public Audiovisual(String _model, String _brand, int _serialNumber) {
-        this.id++;
+        AudiovisualFile avf = new AudiovisualFile();
+        id = avf.createNewID();
         this.status = false;
         this.serialNumber =_serialNumber;
         this.model = _model;

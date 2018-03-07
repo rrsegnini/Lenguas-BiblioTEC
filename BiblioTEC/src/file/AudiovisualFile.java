@@ -100,5 +100,35 @@ public class AudiovisualFile {
 
         return audiovisuals;
     }
+    
+    
+    public List<Audiovisual> getAudioVs(String _letters) {
+        List<Audiovisual> avs = this.getData();
+        List<Audiovisual> newAvs = new ArrayList<>();
+        int pos = _letters.length();
+        for (int i = 0; i < avs.size();i ++) {
+            String brand = avs.get(i).getBrand();
+            String part = brand.substring(0, pos).toUpperCase().trim();
+            String lettersUp = _letters.toUpperCase().trim();
+            if (part.equals(lettersUp) && !avs.get(i).onLoan()) {
+                newAvs.add(avs.get(i));
+                }
+        }
 
+        return newAvs;
+    }
+    
+    
+    public int createNewID() {
+        List<Audiovisual> audiovisuals = this.getData();
+        int id = 0;
+        for (int i=0; i < audiovisuals.size();i++) {
+            if (id < audiovisuals.get(i).getID()) {
+                id = audiovisuals.get(i).getID();
+            }
+        
+        }
+        return id;
+
+    }
 }

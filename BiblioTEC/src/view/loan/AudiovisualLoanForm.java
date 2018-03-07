@@ -5,12 +5,35 @@
  */
 package view.loan;
 
+import static com.sun.org.apache.bcel.internal.Repository.instanceOf;
+import domain.Library;
+import file.AudiovisualFile;
+import file.BookFile;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import materialRegistration.Audiovisual;
+import materialRegistration.Book;
+import materialRegistration.Laptop;
+
 /**
  *
  * @author CASA
  */
 public class AudiovisualLoanForm extends javax.swing.JFrame {
 
+    
+    private int counter = 0;
+    private int lettersLength = 0;
+    private Library library = new Library(); 
+    DefaultTableModel model;
+    //private List<Tuple> searches = new ArrayList<>();
+    private List<Audiovisual> audiovs = new ArrayList<>();
     /**
      * Creates new form BookLoanForm
      */
@@ -18,6 +41,32 @@ public class AudiovisualLoanForm extends javax.swing.JFrame {
         initComponents();
     }
 
+    private void cleanTable() {
+       model = (DefaultTableModel) this.searchAudiovTable.getModel();
+       model.setRowCount(0);
+       searchAudiovTable.setModel(model);
+   
+   }
+
+   private void loadJTable() {
+       
+       model = (DefaultTableModel) this.searchAudiovTable.getModel();
+       model.setRowCount(0);
+        
+       for (int i = 0; i < audiovs.size(); i++){    
+            model.addRow(new Object[]{
+                audiovs.get(i) instanceof materialRegistration.Laptop? "Laptop" : "Proyector",
+                audiovs.get(i).getBrand(),
+                audiovs.get(i).getModel()
+                
+            });
+        }
+
+        this.searchAudiovTable.setModel(model);
+       
+         
+   }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,8 +83,8 @@ public class AudiovisualLoanForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        searchAudiovTable = new javax.swing.JTable();
+        searchAudiovTextField = new javax.swing.JTextField();
 
         jLabel1.setText("jLabel1");
 
@@ -56,30 +105,34 @@ public class AudiovisualLoanForm extends javax.swing.JFrame {
 
         jButton1.setText("Take material on a loan");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        searchAudiovTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Name", "Type", "Brand", "Year"
+                "Type", "Brand", "Model"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setAutoscrolls(false);
-        jTable1.setFocusCycleRoot(true);
-        jScrollPane1.setViewportView(jTable1);
+        searchAudiovTable.setAutoscrolls(false);
+        searchAudiovTable.setFocusCycleRoot(true);
+        jScrollPane1.setViewportView(searchAudiovTable);
 
-        jTextField1.setText("Buscar...");
+        searchAudiovTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchAudiovTextFieldKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -94,7 +147,7 @@ public class AudiovisualLoanForm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(searchAudiovTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(studentIDtxt)
@@ -111,7 +164,7 @@ public class AudiovisualLoanForm extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchAudiovTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -132,6 +185,69 @@ public class AudiovisualLoanForm extends javax.swing.JFrame {
     private void studentIDtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentIDtxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_studentIDtxtActionPerformed
+
+    private void searchAudiovTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchAudiovTextFieldKeyReleased
+        // TODO add your handling code here:
+if ("".equals(this.searchAudiovTextField.getText().trim())) {
+            this.cleanTable();
+            counter = 0;
+            this.library.deleteALLBooks();
+        }
+        else if (this.counter == 0 && this.searchAudiovTextField.getText().trim()  != "") {
+            
+            AudiovisualFile avf = new AudiovisualFile();
+            String letters = this.searchAudiovTextField.getText();
+            List<List<Audiovisual>> audiovsList = new ArrayList<>();
+            this.audiovs = avf.getAudioVs(letters);
+            System.out.print("ENTER");
+            //agrega una lista de listas de libros
+            this.library.setAudiovisualsList(audiovsList); //bookFile.getBooks(letters);
+            //longitud hasta el momento de letras, si esta disminuye, deben de borrarse
+            //de esa lista
+            //si la cantidad de letras cambia, de debe de ver cuantas
+            this.lettersLength = letters.length();
+            //agrega los libros a la lista de listas. Donde cada una contiene
+            //la ultima busqueda y de esa ultima se hara la siguiente.
+            library.addAudiovsToList(audiovs);
+            this.loadJTable();
+            //populate JTable
+            counter++;
+        }
+        else {
+
+            if (this.lettersLength > this.searchAudiovTextField.getText().length()) {
+                this.library.deleteAudiovsList(counter - 1);
+                counter--;
+            } else if (!this.library.getAudiovisualsList().get(counter-1).isEmpty()) {
+                //retorna la nueva busqueda 
+                List<Audiovisual> newaudiovisualList = this.library.searchAudiovisual(this.searchAudiovTextField.getText(), counter-1);
+
+
+                //agrega e=la nueva lista a la lista de listas
+                library.addAudiovsToList(newaudiovisualList);
+                this.repaint();
+                
+                //settea la nueva lista en la lista utilizada para hacer la jtable
+                this.audiovs = newaudiovisualList;
+
+                //populate JTable
+               
+                 this.loadJTable();
+            
+            
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "No Books", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                counter = 0;
+                this.library.deleteALLAudiovs();
+                
+            }
+            
+            
+        
+        }
+
+    }//GEN-LAST:event_searchAudiovTextFieldKeyReleased
 
     /**
      * @param args the command line arguments
@@ -176,8 +292,8 @@ public class AudiovisualLoanForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable searchAudiovTable;
+    private javax.swing.JTextField searchAudiovTextField;
     private javax.swing.JTextField studentIDtxt;
     // End of variables declaration//GEN-END:variables
 }
