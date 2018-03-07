@@ -126,19 +126,21 @@ public class Library {
             List<Loan> update = this.getLoansFromFile();
             if (update != null){
                 update.add(newBookLoan);
+                //registeredLoans = update;
                 loansFile = new file.LoanFile(update);
                 loansFile.saveData();
                 
             }else{
-                registeredLoans.add(newBookLoan);
-                loansFile = new file.LoanFile(registeredLoans);
+                List<Loan> newLoans = new ArrayList<>();
+                newLoans.add(newBookLoan);
+                loansFile = new file.LoanFile(newLoans);
                 loansFile.saveData();
                 
             }
             
             //this.loansFile = new file.LoanFile(update);
             
-            registeredLoans.add(newBookLoan);
+            //registeredLoans.add(newBookLoan);
             //this.loansList.add(newBookLoan);
             
         }
@@ -146,6 +148,20 @@ public class Library {
 
     public List<List<Book>> getBookList() {
         return bookList;
+    }
+    
+    public int getLastLoanID(){
+        try{
+            if (loansFile != null){
+                List<Loan> loans = loansFile.getData();
+                return loans.get(loans.size()-1).getID();
+
+            }else{
+                return 0;
+            }
+        }catch(Exception e){
+            return 0;
+        }
     }
 
     public void setBookList(List<List<Book>> bookList) {
@@ -189,15 +205,21 @@ public class Library {
      * @return A list of loans
      */
     public List<Loan> getLoansByStudentID(int ID) {
-        List<Loan> loans = new ArrayList<>();
+        if (loansFile != null){
+            List<Loan> loans = loansFile.getData();
+             
         for (int i = 0; i < registeredLoans.size(); i++){
             if (registeredLoans.get(i).getStudent().getID() == ID){
-                System.out.println("ASFALSKJFHLAKSJFKLASF " + registeredLoans.get(i).getStudent().getID() );
                 loans.add(registeredLoans.get(i));
             }
         }
         return loans;
+        }
+        
+        return null;
     }
+    
+   
     
     
 }

@@ -112,6 +112,11 @@ public class BookLoanForm extends javax.swing.JFrame {
                 loanBookButtonMouseClicked(evt);
             }
         });
+        loanBookButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loanBookButtonActionPerformed(evt);
+            }
+        });
 
         searchBookTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -324,6 +329,10 @@ public class BookLoanForm extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_loanBookButtonMouseClicked
+
+    private void loanBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loanBookButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loanBookButtonActionPerformed
     
     
     /**

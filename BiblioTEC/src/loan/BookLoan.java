@@ -17,11 +17,11 @@ import studentRegistration.Student;
 public class BookLoan extends Loan{
     
     private materialRegistration.Book bookLoaned;
-    private static int ID = 0;
+    
     
     public BookLoan(Student _student, Date _date,
             materialRegistration.Book _bookLoaned ) {    
-        super(ID++, _student, _date);
+        super(0, _student, _date);
         this.bookLoaned = _bookLoaned;
     }
 
