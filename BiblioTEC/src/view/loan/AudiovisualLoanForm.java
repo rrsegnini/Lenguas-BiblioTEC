@@ -264,7 +264,7 @@ if ("".equals(this.searchAudiovTextField.getText().trim())) {
         if (rowSelected != -1) {
             String model = 
                     searchAudiovTable.getValueAt
-                            (searchAudiovTable.getSelectedRow(), 1).toString();
+                            (searchAudiovTable.getSelectedRow(), 2).toString();
             
            studentRegistration.Student loanedStudent =
                     file.StudentFile.getInstance()
@@ -276,7 +276,7 @@ if ("".equals(this.searchAudiovTextField.getText().trim())) {
                 
                 
                
-                domain.Library.getInstance().registerAudiovisual(loanedAV);
+                domain.Library.getInstance().loanAudiovisual(loanedAV, loanedStudent);
 
                 JOptionPane.showMessageDialog(rootPane,"Loan registered successfully",
                        "Success", JOptionPane.ERROR_MESSAGE);

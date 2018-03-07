@@ -18,6 +18,7 @@ public class Audiovisual implements Material, Serializable{
     private String model;
     private String brand;
     private int serialNumber;
+    private boolean state;
     
     public Audiovisual() {
     }
@@ -45,6 +46,21 @@ public class Audiovisual implements Material, Serializable{
     
     public int getSerialNumber() {return this.serialNumber;}
     public void setSerialNumber(int _serialNumber) {this.serialNumber = _serialNumber;}
+    
+     /**
+     * If an audiovisual is on a loan or not
+     * @return True if the book is loaned, false if it isn't.
+     */
+    public boolean getState() {
+        return state;
+    }
+    /**
+     * Sets an audiovisual as available or not (true is available, false is unavailable)
+     * @param state 
+     */
+    public void setState(boolean state) {
+        this.state = state;
+    }
     
     
     

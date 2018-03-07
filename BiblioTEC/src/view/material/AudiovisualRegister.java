@@ -351,6 +351,8 @@ public class AudiovisualRegister extends javax.swing.JFrame {
                     Integer.parseInt(serialTxt.getText()), Integer.parseInt(screenSizeTxt.getText()), os);
             try{
                 domain.Library.getInstance().registerAudiovisual(laptop);
+                JOptionPane.showMessageDialog(rootPane, "Audiovisual material registered successfully", 
+                    "Success", JOptionPane.PLAIN_MESSAGE);
             }catch(Exception e){
                 System.err.println(e.toString());
             }

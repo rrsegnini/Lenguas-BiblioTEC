@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import loan.AudiovisualLoan;
 import loan.BookLoan;
 import loan.Loan;
 import loan.Return;
@@ -323,24 +324,24 @@ public class Library {
         
     }
     
-        public void loanAudiovisual(Book _book, Student _student) {
+        public void loanAudiovisual(Audiovisual _av, Student _student) {
         Date actualDate = new Date();
         //int _ID, Student _student, Date _date,materialRegistration.Book _bookLoaned 
-        if (!_book.onLoan()) {
+        if (!_av.onLoan()) {
             
-            _book.setState(false);
-            BookLoan newBookLoan = new BookLoan(_student,actualDate,_book);
+            _av.setState(false);
+            AudiovisualLoan newAVLoan = new AudiovisualLoan(1, _student,actualDate,_av);
             
             List<Loan> update = this.getLoansFromFile();
             if (update != null){
-                update.add(newBookLoan);
+                update.add(newAVLoan);
                 //registeredLoans = update;
                 loansFile = new file.LoanFile(update);
                 loansFile.saveData();
                 
             }else{
                 List<Loan> newLoans = new ArrayList<>();
-                newLoans.add(newBookLoan);
+                newLoans.add(newAVLoan);
                 loansFile = new file.LoanFile(newLoans);
                 loansFile.saveData();
                 

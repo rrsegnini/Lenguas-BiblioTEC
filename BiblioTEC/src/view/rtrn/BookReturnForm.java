@@ -156,21 +156,28 @@ public class BookReturnForm extends javax.swing.JFrame {
                         "Book", book.getName() + " by "
                             + book.getAuthor(), bloan.getDate(), book.getISBN()});
 
-                }else if (loans.get(i) instanceof loan.AudiovisualLoan){
+                }
+            }else if (loans.get(i) instanceof loan.AudiovisualLoan && loans.get(i).getState())
+                {
+
                     loan.AudiovisualLoan AVloan;
                     AVloan = (loan.AudiovisualLoan)loans.get(i);
                     materialRegistration.Audiovisual AV = 
                             AVloan.getAudioVisualLoaned();
 
-                    model.addRow(new Object[]{"Audiovisual", AV.getBrand() + " "
+                    model.addRow(new Object[]{loans.get(i).getID(),
+                        "Audiovisual", AV.getBrand() + " "
                             + AV.getModel(), AVloan.getDate(), 
                             AV.getSerialNumber()});
 
-                }
+                }/*else{
+                    System.out.println("Diay no");
+                }*/
             }
-        }
-
         loanedMaterialTable.setModel(model);
+        
+
+        
         
         }catch(Exception e){
             System.err.println(e.toString());
@@ -205,9 +212,7 @@ public class BookReturnForm extends javax.swing.JFrame {
                 studentRegistration.Student student = file.StudentFile.getInstance().
                     getStudentByID(Integer.parseInt(studentIDbox.getText()));
                 
-                /*if (type.equalsIgnoreCase("book")){
-                    loan.BookReturn bookRet = new loan.BookReturn(ID, student);
-                }*/
+
                 for (int i = 0; i < loans.size(); i++){
                     if (loans.get(i).getID() == ID && loans.get(i) instanceof loan.BookLoan){
                         materialRegistration.Book b = ((BookLoan)loans.get(i)).getBookLoaned();
@@ -220,30 +225,20 @@ public class BookReturnForm extends javax.swing.JFrame {
                         loan.BookReturn bookRet = 
                                 new loan.BookReturn(ID, student,today, b);
                         
-                    }else if (loans.get(i).getID() == ID && loans.get(i) instanceof loan.AudiovisualLoan){
+                    }else if (loans.get(i).getID() == ID && loans.get(i) instanceof loan.AudiovisualLoan)
+                    {
                         materialRegistration.Audiovisual av = ((AudiovisualLoan)loans.get(i)).getAudioVisualLoaned();
                         loans.get(i).setState(false);
                         
+                        file.LoanFile f = new file.LoanFile(loans);
+                        
+                        f.saveData();
+                        
                         loan.AudiovisualReturn bookRet = 
                                 new loan.AudiovisualReturn(ID, student,today, av);
+                        System.out.println("Listo");
                     }
                 }
-               /*studentRegistration.Student loanedStudent =
-                        file.StudentFile.getInstance()
-                         .getStudentByID(Integer.parseInt(studentIDtxt.getText()));
-           if (loanedStudent != null){
-        
-                materialRegistration.Book loanedBook = 
-                file.BookFile.getInstance().getBooktByName(bookName);
-                domain.Library.getInstance().loanBook(loanedBook, loanedStudent);
-
-                JOptionPane.showMessageDialog(rootPane,"Loan registered successfully",
-                       "Success", JOptionPane.ERROR_MESSAGE);
-                
-           }else{
-               JOptionPane.showMessageDialog(rootPane, "Student not registered",
-                       "Error", JOptionPane.ERROR_MESSAGE);
-           }*/
     
             
         }
