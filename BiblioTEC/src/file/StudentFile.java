@@ -23,6 +23,8 @@ public class StudentFile {
     private String myFilePath;
     private static StudentFile studentInstance = null;
 
+    
+    private StudentFile(){}
     //constructor
     /**
      * 
@@ -35,8 +37,23 @@ public class StudentFile {
     }
     
     public static StudentFile getInstance(){
-        return studentInstance;
+        if (studentInstance == null){
+            
+            try{
+                File file = new File("./files/studentFile.dat");
+                file.getParentFile().mkdirs();
+                studentInstance = new StudentFile(file);
+                return studentInstance;
+            }catch(Exception e){
+                
+            }
+        }else{
+            return studentInstance;
+        }
+        
+        return null;
     }
+    
     private void start(File file) throws IOException{
         //almaceno la ruta
         myFilePath = file.getPath();
@@ -80,6 +97,7 @@ public class StudentFile {
             else{
                 //escribimos en archivo
                 randomAccessFile.seek(position * regSize);
+                randomAccessFile.writeInt(_student.getID());
                 randomAccessFile.writeUTF(_student.getName());
                 randomAccessFile.writeUTF(_student.getLastName());
                 randomAccessFile.writeInt(_student.getID());
@@ -131,11 +149,14 @@ public class StudentFile {
             //llevamos a cabo las lecturas
             myStudent.setID(randomAccessFile.readInt());
             myStudent.setName(randomAccessFile.readUTF());
+            //randomAccessFile.readUTF();
+            //System.err.println("ERRRRRRRRRRRRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOOOOOR");
             myStudent.setLastName(randomAccessFile.readUTF());
             myStudent.setCareerStr(randomAccessFile.readUTF());
             
             //si es delete no retorno
             if(myStudent.getName().equalsIgnoreCase("delete")){
+                                
                 return null;
             }
             else{
@@ -253,8 +274,9 @@ public class StudentFile {
         
         //recorro todos mis registros y los inserto en la lista
         for(int i = 0; i < regsQuantity; i++){
-            Student studentTemp = this.getStudent(i);
+            System.out.println("ACÁ SÍ");
             
+            Student studentTemp = this.getStudent(i);
             if(studentTemp.getID() == ID){
                 return studentTemp;
             }

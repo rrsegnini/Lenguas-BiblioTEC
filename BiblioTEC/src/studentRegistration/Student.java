@@ -5,13 +5,14 @@
  */
 package studentRegistration;
 
+import java.io.Serializable;
 import java.util.Collections;
 
 /**
  *
  * @author danielalvarado
  */
-public class Student {
+public class Student implements Serializable{
     private int ID;
     private String name;
     private String lastName;

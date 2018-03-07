@@ -5,6 +5,7 @@
  */
 package loan;
 
+import java.io.Serializable;
 import java.util.Date;
 import materialRegistration.Book;
 import studentRegistration.Student;
@@ -17,9 +18,10 @@ public class BookLoan extends Loan{
     
     private materialRegistration.Book bookLoaned;
     
-    public BookLoan(int _ID, Student _student, Date _date,
-            materialRegistration.Book _bookLoaned ) {
-        super(_ID, _student, _date);
+    
+    public BookLoan(Student _student, Date _date,
+            materialRegistration.Book _bookLoaned ) {    
+        super(0, _student, _date);
         this.bookLoaned = _bookLoaned;
     }
 

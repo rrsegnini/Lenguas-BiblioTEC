@@ -10,6 +10,7 @@ import file.BookFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +33,7 @@ public class BookLoanForm extends javax.swing.JFrame {
     
     private int counter = 0;
     private int lettersLength = 0;
-    private Library library = new Library(); 
+    private Library library = domain.Library.getInstance(); 
     DefaultTableModel model;
     //private List<Tuple> searches = new ArrayList<>();
     private List<Book> books = new ArrayList<>();
@@ -54,7 +55,8 @@ public class BookLoanForm extends javax.swing.JFrame {
        model = (DefaultTableModel) this.searchBookTable.getModel();
        model.setRowCount(0);
         
-       for (int i = 0; i < books.size(); i++){    
+       for (int i = 0; i < books.size(); i++){
+           if (!books.get(i).getState()){
             model.addRow(new Object[]{
                 books.get(i).getName(),
                 books.get(i).getAuthor(),
@@ -62,6 +64,7 @@ public class BookLoanForm extends javax.swing.JFrame {
                 books.get(i).getYear()
             });
         }
+       }
 
         searchBookTable.setModel(model);
        
@@ -109,6 +112,11 @@ public class BookLoanForm extends javax.swing.JFrame {
         loanBookButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 loanBookButtonMouseClicked(evt);
+            }
+        });
+        loanBookButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loanBookButtonActionPerformed(evt);
             }
         });
 
@@ -279,17 +287,54 @@ public class BookLoanForm extends javax.swing.JFrame {
     }//GEN-LAST:event_searchBookTextFieldKeyReleased
 
     private void loanBookButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loanBookButtonMouseClicked
-        // TODO add your handling code here:
+        try{
+        Date today = new Date();
         int rowSelected = this.searchBookTable.getSelectedRow();
         
         // si efectivamente hay algo seleccionado en la tabla
         if (rowSelected != -1) {
-            //table.getValueAt(table.getSelectedRow(), 0).toString());\
+            String bookName = 
+                    searchBookTable.getValueAt
+                            (searchBookTable.getSelectedRow(), 0).toString();
+            
+           studentRegistration.Student loanedStudent =
+                    file.StudentFile.getInstance()
+                     .getStudentByID(Integer.parseInt(studentIDtxt.getText()));
+           if (loanedStudent != null){
+        
+                materialRegistration.Book loanedBook = 
+                file.BookFile.getInstance().getBooktByName(bookName);
+                domain.Library.getInstance().loanBook(loanedBook, loanedStudent);
+
+                JOptionPane.showMessageDialog(rootPane,"Loan registered successfully",
+                       "Success", JOptionPane.ERROR_MESSAGE);
+                
+           }else{
+               JOptionPane.showMessageDialog(rootPane, "Student not registered",
+                       "Error", JOptionPane.ERROR_MESSAGE);
+           }
+           
+            
+            
+            
+            
+            
+            
+        }
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+        }
+            
             //Obtener el nombre primero 
             
+            
         
-        }
+        
     }//GEN-LAST:event_loanBookButtonMouseClicked
+
+    private void loanBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loanBookButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loanBookButtonActionPerformed
     
     
     /**
