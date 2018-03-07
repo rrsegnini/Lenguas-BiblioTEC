@@ -68,8 +68,11 @@ public class Book implements Material, Serializable{
     public void setId(int id) {
         this.id = id;
     }
-
-    public boolean isState() {
+    /**
+     * If a book is on a loan or not
+     * @return True if the book is loaned, false if it isn't.
+     */
+    public boolean getState() {
         return state;
     }
     /**

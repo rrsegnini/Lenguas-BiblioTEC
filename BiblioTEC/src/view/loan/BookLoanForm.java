@@ -55,7 +55,8 @@ public class BookLoanForm extends javax.swing.JFrame {
        model = (DefaultTableModel) this.searchBookTable.getModel();
        model.setRowCount(0);
         
-       for (int i = 0; i < books.size(); i++){    
+       for (int i = 0; i < books.size(); i++){
+           if (!books.get(i).getState()){
             model.addRow(new Object[]{
                 books.get(i).getName(),
                 books.get(i).getAuthor(),
@@ -63,6 +64,7 @@ public class BookLoanForm extends javax.swing.JFrame {
                 books.get(i).getYear()
             });
         }
+       }
 
         searchBookTable.setModel(model);
        
