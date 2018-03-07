@@ -313,13 +313,7 @@ public class BookLoanForm extends javax.swing.JFrame {
                JOptionPane.showMessageDialog(rootPane, "Student not registered",
                        "Error", JOptionPane.ERROR_MESSAGE);
            }
-           
-            
-            
-            
-            
-            
-            
+   
         }
         }catch(Exception e){
             System.err.println(e.getMessage());

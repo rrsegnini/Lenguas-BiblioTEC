@@ -12,6 +12,7 @@ import file.BookFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -81,7 +82,7 @@ public class AudiovisualLoanForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         studentIDtxt = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        avLoanBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         searchAudiovTable = new javax.swing.JTable();
         searchAudiovTextField = new javax.swing.JTextField();
@@ -103,7 +104,12 @@ public class AudiovisualLoanForm extends javax.swing.JFrame {
 
         jLabel4.setText("Student ID:");
 
-        jButton1.setText("Take material on a loan");
+        avLoanBtn.setText("Take material on a loan");
+        avLoanBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                avLoanBtnMouseClicked(evt);
+            }
+        });
 
         searchAudiovTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -154,7 +160,7 @@ public class AudiovisualLoanForm extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))))
+                            .addComponent(avLoanBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -175,7 +181,7 @@ public class AudiovisualLoanForm extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(258, 258, 258)
-                        .addComponent(jButton1)))
+                        .addComponent(avLoanBtn)))
                 .addContainerGap())
         );
 
@@ -249,6 +255,43 @@ if ("".equals(this.searchAudiovTextField.getText().trim())) {
 
     }//GEN-LAST:event_searchAudiovTextFieldKeyReleased
 
+    private void avLoanBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_avLoanBtnMouseClicked
+                try{
+        Date today = new Date();
+        int rowSelected = this.searchAudiovTable.getSelectedRow();
+        
+        // si efectivamente hay algo seleccionado en la tabla
+        if (rowSelected != -1) {
+            String model = 
+                    searchAudiovTable.getValueAt
+                            (searchAudiovTable.getSelectedRow(), 1).toString();
+            
+           studentRegistration.Student loanedStudent =
+                    file.StudentFile.getInstance()
+                     .getStudentByID(Integer.parseInt(studentIDtxt.getText()));
+           if (loanedStudent != null){
+        
+                materialRegistration.Audiovisual loanedAV = 
+                        domain.Library.getInstance().getAVbyModel(model);
+                
+                
+               
+                domain.Library.getInstance().registerAudiovisual(loanedAV);
+
+                JOptionPane.showMessageDialog(rootPane,"Loan registered successfully",
+                       "Success", JOptionPane.ERROR_MESSAGE);
+                
+           }else{
+               JOptionPane.showMessageDialog(rootPane, "Student not registered",
+                       "Error", JOptionPane.ERROR_MESSAGE);
+           }
+   
+        }
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+        }
+    }//GEN-LAST:event_avLoanBtnMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -286,7 +329,7 @@ if ("".equals(this.searchAudiovTextField.getText().trim())) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton avLoanBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

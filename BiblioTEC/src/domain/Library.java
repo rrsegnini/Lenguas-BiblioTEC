@@ -278,6 +278,22 @@ public class Library {
         return null;
     }
     
+    public Audiovisual getAVbyModel(String model) {
+        if (avFile != null){
+            List<Audiovisual> avs = avFile.getData();
+            
+             
+        for (int i = 0; i < avs.size(); i++){
+            if (avs.get(i).getModel().equalsIgnoreCase(model)){
+                return avs.get(i);
+            }
+        }
+        
+        }
+        
+        return null;
+    }
+    
     public List<Audiovisual> getAudiovisualsFromFile(){
         if (avFile != null){
             return avFile.getData();
@@ -288,14 +304,7 @@ public class Library {
     
     
     public void registerAudiovisual(materialRegistration.Audiovisual av) throws IOException {
-        //escribe el libro en el archivo
-        //String path = new File(".").getCanonicalPath();
-        //File file = new File(path);
-        /*File file = new File("./files/audiovisualFile.dat");
-        file.getParentFile().mkdirs();
-        AudiovisualFile avFile = new AudiovisualFile(file);*/
-        //file.AudiovisualFile avFile = new file.AudiovisualFile();
-        
+ 
         List<Audiovisual> update = this.getAudiovisualsFromFile();
         if (update != null){
             update.add(av);
@@ -310,20 +319,39 @@ public class Library {
             avFile.saveData();
 
         }
-/*
-        List<Audiovisual> avList = new ArrayList<>();
-        //if (avList != null){
-            avFile.getData();
-            avList.add(av);
-            avFile = new file.AudiovisualFile(avList);*/
-        //}
+
         
-        
-        //crea el objeto libro para poder agregarlo en el archivo
-        //Book book = new Book( _name,  _author,  _year, _type,  _isbn);
-        //agrega el libro al archivo
-        //return bookFile.addEndRecord(book);
-        
+    }
+    
+        public void loanAudiovisual(Book _book, Student _student) {
+        Date actualDate = new Date();
+        //int _ID, Student _student, Date _date,materialRegistration.Book _bookLoaned 
+        if (!_book.onLoan()) {
+            
+            _book.setState(false);
+            BookLoan newBookLoan = new BookLoan(_student,actualDate,_book);
+            
+            List<Loan> update = this.getLoansFromFile();
+            if (update != null){
+                update.add(newBookLoan);
+                //registeredLoans = update;
+                loansFile = new file.LoanFile(update);
+                loansFile.saveData();
+                
+            }else{
+                List<Loan> newLoans = new ArrayList<>();
+                newLoans.add(newBookLoan);
+                loansFile = new file.LoanFile(newLoans);
+                loansFile.saveData();
+                
+            }
+            
+            //this.loansFile = new file.LoanFile(update);
+            
+            //registeredLoans.add(newBookLoan);
+            //this.loansList.add(newBookLoan);
+            
+        }
     }
     
    
