@@ -4,7 +4,16 @@
  * and open the template in the editor.
  */
 package util;
+import file.BookFile;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import materialRegistration.Book;
 import studentRegistration.Career;
+import view.loan.BookLoanForm;
 /**
  *
  * @author danielalvarado
@@ -45,6 +54,20 @@ public class Conversions {
                 
         }   
         return career;
+    
+    }
+    
+    public static int getNewID() {
+        File file = new File("./files/bookFile.dat");
+        int id = 1;
+            try {
+                BookFile bookFile = new BookFile(file);
+                id = bookFile.createNewID();
+            } catch (IOException ex) {
+                Logger.getLogger(BookLoanForm.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                return id;
+            }
     
     }
 }

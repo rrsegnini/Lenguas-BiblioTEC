@@ -5,6 +5,8 @@
  */
 package materialRegistration;
 
+import util.Conversions;
+
 /**
  *
  * @author danielalvarado
@@ -23,7 +25,7 @@ public class Book implements Material{
     }
     
     public Book(String _name, String _author, int _year, BookType _type, String _isbn) {
-        this.id++;
+        this.id = Conversions.getNewID();
         this.name = _name;
         this.author = _author;
         this.year = _year;
