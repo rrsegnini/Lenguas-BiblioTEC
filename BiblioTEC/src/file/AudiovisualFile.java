@@ -28,22 +28,29 @@ public class AudiovisualFile {
         private List<Audiovisual> audioVlList = new ArrayList<>();
 
 
-        public AudiovisualFile() {
-
+        public AudiovisualFile() {};
+        
+        
+        public AudiovisualFile(List<Audiovisual> _list) {
+            this.audioVlList = _list;
         }
         
         public AudiovisualFile(List<Audiovisual> _userList) {
             this.audioVlList = _userList;
         }
 
+    public void setAudioVlList(List<Audiovisual> audioVlList) {
+        this.audioVlList = audioVlList;
+    }
 
 
-        public void saveData() {
+
+        public void saveData(List<Audiovisual> _audioVlList)) {
             try {
                 java.io.File file = new File("./files/audiovisualFile.dat");
+                
                 if (!file.exists()){
-                    file.getParentFile().mkdir(); // Will create parent directories if not exists
-                    //file.createNewFile();
+                    file.createNewFile();
 
                 }
 
@@ -51,7 +58,7 @@ public class AudiovisualFile {
                 //fos = new FileOutputStream("users.dat");
                 //fos = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath()+"/users.dat");
                 salida = new ObjectOutputStream(fos);
-                salida.writeObject(this.audioVlList);
+                salida.writeObject(_audioVlList);
             } catch (FileNotFoundException e) {
 
                 System.out.println(e.getMessage());
