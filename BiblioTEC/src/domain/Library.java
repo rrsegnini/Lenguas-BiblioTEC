@@ -15,6 +15,7 @@ import java.util.List;
 import loan.BookLoan;
 import loan.Loan;
 import loan.Return;
+import materialRegistration.Audiovisual;
 import materialRegistration.Book;
 import materialRegistration.BookType;
 import studentRegistration.Career;
@@ -26,12 +27,14 @@ import studentRegistration.Student;
  * @author danielalvarado
  */
 public class Library {
+
     List<List<Book>> bookList = new ArrayList<List<Book>>();
     List<Student> studentsList = new ArrayList<Student>();
     public List<Loan> registeredLoans = new ArrayList<Loan>(); 
     List<Return> returnsList = new ArrayList<Return>(); 
     private static Library libraryInstance = new Library();
     private file.LoanFile loansFile;
+
     
     
     
@@ -63,6 +66,30 @@ public class Library {
             return null;
         }
     }
+    
+    public void addAudiovsToList( List<Audiovisual> audiovs) {
+        this.audiovisualsList.add(audiovs);
+    }
+    
+    public List<Audiovisual>  searchAudiovisual(String _letters, int _counter) {
+        List<Audiovisual> audiovsList = audiovisualsList.get(_counter);
+        List<Audiovisual> newAudiovsList = new ArrayList<>();
+        Audiovisual audiovs;
+        int pos = _letters.length();
+        for (int i = 0; i < audiovisualsList.size();i++) {
+            audiovs = audiovsList.get(i);
+            String name = audiovs.getBrand();
+            String part = name.substring(0, pos).toUpperCase().trim();
+            String lettersUp = _letters.toUpperCase().trim();
+            if (part.equals(lettersUp)&& !audiovs.onLoan()) {
+                newAudiovsList.add(audiovs);
+            }
+            
+            
+        }
+        return newAudiovsList;
+    }
+    
     
     public List<Book>  searchBook(String _letters, int _counter) {
         List<Book> books = bookList.get(_counter);
@@ -183,6 +210,31 @@ public class Library {
     public void setLoansList(List<Loan> loansList) {
         this.registeredLoans = loansList;
     }
+
+    public List<List<Audiovisual>> getAudiovisualsList() {
+        return audiovisualsList;
+    }
+
+    public void setAudiovisualsList(List<List<Audiovisual>> audiovisualsList) {
+        this.audiovisualsList = audiovisualsList;
+    }
+    
+    
+    public boolean deleteAudiovsList(int _pos) {
+        try {this.audiovisualsList.remove(_pos);
+            return true;}
+        catch (Exception e) {
+            System.out.print("ERROR AL BORRAR LIBRO DE LA LISTA");
+            return false;
+        }
+    }
+    
+    public void deleteALLAudiovs() {
+        while (!this.audiovisualsList.isEmpty()) {
+            this.audiovisualsList.remove(0);
+        }
+    }
+    
     
     public boolean deleteBooksList(int _pos) {
         try {this.bookList.remove(_pos);

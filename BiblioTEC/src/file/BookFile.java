@@ -85,7 +85,19 @@ public class BookFile {
     }
     
     
+    public int createNewID() throws IOException {
+        Book book;
+        int id = 0;
+        List<Book> books = new ArrayList<Book>();
+        for(int i = 0; i < regsQuantity; i++){
+            book = this.getBook(i);
+            if (id < book.getID()) {
+                id = book.getID();
+            }
+        }
+        return id + 1;
     
+    }
 
      public List<Book> getBooks(String _letters) throws IOException {
         
