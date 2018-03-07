@@ -31,6 +31,10 @@ public class AudiovisualFile {
         public AudiovisualFile() {
 
         }
+        
+        public AudiovisualFile(List<Audiovisual> _userList) {
+            this.audioVlList = _userList;
+        }
 
 
 
@@ -120,7 +124,7 @@ public class AudiovisualFile {
     
     
     public int createNewID() {
-        List<Audiovisual> audiovisuals = this.getData();
+        /*List<Audiovisual> audiovisuals = this.getData();
         int id = 0;
         for (int i=0; i < audiovisuals.size();i++) {
             if (id < audiovisuals.get(i).getID()) {
@@ -129,6 +133,7 @@ public class AudiovisualFile {
         
         }
         return id;
-
+*/
+        return 1;
     }
 }

@@ -5,11 +5,13 @@
  */
 package materialRegistration;
 
+import java.io.Serializable;
+
 /**
  *
  * @author danielalvarado
  */
-public class Laptop extends Audiovisual{
+public class Laptop extends Audiovisual implements Serializable{
     private int screenSize;
     private LaptopOS os;
     

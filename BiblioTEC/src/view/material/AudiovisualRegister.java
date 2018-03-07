@@ -51,7 +51,7 @@ public class AudiovisualRegister extends javax.swing.JFrame {
         brandAVLbl = new javax.swing.JLabel();
         showYearLbl = new javax.swing.JLabel();
         brandAVTxt = new javax.swing.JTextField();
-        publisherTxt = new javax.swing.JTextField();
+        serialTxt = new javax.swing.JTextField();
         yearLbl1 = new javax.swing.JLabel();
         registerBookBTN = new javax.swing.JButton();
         avTypeBOX = new javax.swing.JComboBox<>();
@@ -136,6 +136,11 @@ public class AudiovisualRegister extends javax.swing.JFrame {
         jLabel1.setText("Operative System:");
 
         screenSizeTxt.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        screenSizeTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                screenSizeTxtActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setText("Screen size (inches):");
@@ -219,7 +224,7 @@ public class AudiovisualRegister extends javax.swing.JFrame {
 
         brandAVTxt.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
-        publisherTxt.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        serialTxt.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
         yearLbl1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         yearLbl1.setText("Serial number:");
@@ -270,7 +275,7 @@ public class AudiovisualRegister extends javax.swing.JFrame {
                                         .addComponent(titleLbl, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(brandAVLbl, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(brandAVTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(publisherTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(serialTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(yearLbl1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(showYearLbl))
@@ -302,7 +307,7 @@ public class AudiovisualRegister extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(yearLbl1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(publisherTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(serialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)))
                 .addComponent(registerBookBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -321,12 +326,35 @@ public class AudiovisualRegister extends javax.swing.JFrame {
     }//GEN-LAST:event_avTypeBOXMouseReleased
 
     private void avTypeBOXMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_avTypeBOXMouseClicked
+
         
+       // lumensTxt.getText()
         
     }//GEN-LAST:event_avTypeBOXMouseClicked
 
     private void registerBookBTNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerBookBTNMouseClicked
-        System.out.println("Click");
+            if (avTypeBOX.getSelectedItem().toString().equalsIgnoreCase("laptop")){
+            modelAVTxt.getText();
+            //tring _model, String _brand, int _serialNumber, int _screenSize, LaptopOS _os
+            
+            materialRegistration.LaptopOS os = materialRegistration.LaptopOS.OTHER;
+            if (osBox.getSelectedItem().toString().equalsIgnoreCase("windows")){
+                os = materialRegistration.LaptopOS.WINDOWS;
+            }else if (osBox.getSelectedItem().toString().equalsIgnoreCase("linux")){
+                os = materialRegistration.LaptopOS.LINUX;
+            }else if (osBox.getSelectedItem().toString().equalsIgnoreCase("MACOSX")){
+                os = materialRegistration.LaptopOS.MACOSX;
+            }
+            
+            materialRegistration.Laptop laptop = 
+                    new materialRegistration.Laptop(modelAVTxt.getText(), brandAVTxt.getText(),
+                    Integer.parseInt(serialTxt.getText()), Integer.parseInt(screenSizeTxt.getText()), os);
+            try{
+                domain.Library.getInstance().registerAudiovisual(laptop);
+            }catch(Exception e){
+                System.err.println(e.toString());
+            }
+        }
     }//GEN-LAST:event_registerBookBTNMouseClicked
 
     private void avTypeBOXItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_avTypeBOXItemStateChanged
@@ -392,6 +420,10 @@ public class AudiovisualRegister extends javax.swing.JFrame {
         lumensTxt.setVisible(false);
     }//GEN-LAST:event_acceptLapInfoBTN1MouseClicked
 
+    private void screenSizeTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_screenSizeTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_screenSizeTxtActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -449,10 +481,10 @@ public class AudiovisualRegister extends javax.swing.JFrame {
     private javax.swing.JTextField modelAVTxt;
     private javax.swing.JComboBox<String> osBox;
     private javax.swing.JDialog projectorDialog;
-    private javax.swing.JTextField publisherTxt;
     private javax.swing.JButton registerBookBTN;
     private javax.swing.JLabel registerLbl;
     private javax.swing.JTextField screenSizeTxt;
+    private javax.swing.JTextField serialTxt;
     private javax.swing.JLabel showYearLbl;
     private javax.swing.JLabel titleLbl;
     private javax.swing.JLabel yearLbl1;

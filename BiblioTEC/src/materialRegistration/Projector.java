@@ -5,11 +5,13 @@
  */
 package materialRegistration;
 
+import java.io.Serializable;
+
 /**
  *
  * @author danielalvarado
  */
-public class Projector extends Audiovisual{
+public class Projector extends Audiovisual implements Serializable{
     private int lumens;
     
     public Projector(String _model, String _brand, int _serialNumber, int _lumens) {

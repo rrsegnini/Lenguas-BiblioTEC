@@ -5,6 +5,7 @@
  */
 package domain;
 
+import file.AudiovisualFile;
 import file.BookFile;
 import file.StudentFile;
 import java.io.File;
@@ -34,6 +35,9 @@ public class Library {
     List<Return> returnsList = new ArrayList<Return>(); 
     private static Library libraryInstance = new Library();
     private file.LoanFile loansFile;
+    List<List<Audiovisual>> audiovisualsList = new ArrayList<>();
+    file.AudiovisualFile avFile;
+    public List<Audiovisual> registeredAV = new ArrayList<>(); 
 
     
     
@@ -42,6 +46,9 @@ public class Library {
         registeredLoans = new ArrayList<Loan>(); 
         loansFile = new file.LoanFile(registeredLoans);
         loansFile.getData();
+        
+         avFile = new file.AudiovisualFile(registeredAV);
+         avFile.getData();
     }
     
     public static Library getInstance(){
@@ -269,6 +276,54 @@ public class Library {
         }
         
         return null;
+    }
+    
+    public List<Audiovisual> getAudiovisualsFromFile(){
+        if (avFile != null){
+            return avFile.getData();
+        }else{
+            return null;
+        }
+    }
+    
+    
+    public void registerAudiovisual(materialRegistration.Audiovisual av) throws IOException {
+        //escribe el libro en el archivo
+        //String path = new File(".").getCanonicalPath();
+        //File file = new File(path);
+        /*File file = new File("./files/audiovisualFile.dat");
+        file.getParentFile().mkdirs();
+        AudiovisualFile avFile = new AudiovisualFile(file);*/
+        //file.AudiovisualFile avFile = new file.AudiovisualFile();
+        
+        List<Audiovisual> update = this.getAudiovisualsFromFile();
+        if (update != null){
+            update.add(av);
+            //registeredLoans = update;
+            avFile = new file.AudiovisualFile(update);
+            avFile.saveData();
+
+        }else{
+            List<Audiovisual> newLoans = new ArrayList<>();
+            newLoans.add(av);
+            avFile = new file.AudiovisualFile(newLoans);
+            avFile.saveData();
+
+        }
+/*
+        List<Audiovisual> avList = new ArrayList<>();
+        //if (avList != null){
+            avFile.getData();
+            avList.add(av);
+            avFile = new file.AudiovisualFile(avList);*/
+        //}
+        
+        
+        //crea el objeto libro para poder agregarlo en el archivo
+        //Book book = new Book( _name,  _author,  _year, _type,  _isbn);
+        //agrega el libro al archivo
+        //return bookFile.addEndRecord(book);
+        
     }
     
    

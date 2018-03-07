@@ -213,6 +213,9 @@
               <Font name="Arial" size="18" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="screenSizeTxtActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -285,7 +288,7 @@
                                       <Component id="titleLbl" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="brandAVLbl" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="brandAVTxt" alignment="0" min="-2" pref="302" max="-2" attributes="0"/>
-                                      <Component id="publisherTxt" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
+                                      <Component id="serialTxt" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="yearLbl1" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -326,7 +329,7 @@
                       <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
                       <Component id="yearLbl1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="publisherTxt" min="-2" max="-2" attributes="0"/>
+                      <Component id="serialTxt" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -381,7 +384,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="publisherTxt">
+    <Component class="javax.swing.JTextField" name="serialTxt">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="18" style="0"/>

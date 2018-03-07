@@ -6,12 +6,13 @@
 package materialRegistration;
 
 import file.AudiovisualFile;
+import java.io.Serializable;
 
 /**
  *
  * @author danielalvarado
  */
-public class Audiovisual implements Material{
+public class Audiovisual implements Material, Serializable{
     private int id;
     private boolean status;
     private String model;
