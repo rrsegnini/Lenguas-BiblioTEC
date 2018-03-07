@@ -21,8 +21,8 @@ public class StudentFile {
     private int regsQuantity;//me indica la cantidad de registros
     private int regSize;
     private String myFilePath;
-    
-    
+    private static StudentFile studentInstance = null;
+
     //constructor
     /**
      * 
@@ -31,8 +31,12 @@ public class StudentFile {
      */
     public StudentFile(File file) throws IOException{
         start(file);
+        studentInstance = this;
     }
     
+    public static StudentFile getInstance(){
+        return studentInstance;
+    }
     private void start(File file) throws IOException{
         //almaceno la ruta
         myFilePath = file.getPath();
@@ -235,6 +239,29 @@ public class StudentFile {
         //si llega a este punto no encontro a la persona
         return false;
     }
+    
+        /**
+     * Looks for a student with the given ID
+     * @param student ID
+     * @return the Student object that matches the ID
+     * @throws IOException
+     */
+    public Student getStudentByID(int ID) throws IOException{
+        
+        //variables a retornar
+        List<Student> students = new ArrayList<Student>();
+        
+        //recorro todos mis registros y los inserto en la lista
+        for(int i = 0; i < regsQuantity; i++){
+            Student studentTemp = this.getStudent(i);
+            
+            if(studentTemp.getID() == ID){
+                return studentTemp;
+            }
+        }
+        
+        return null;
+    }//fin metodo
        
     
 }

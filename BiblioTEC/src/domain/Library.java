@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import loan.BookLoan;
 import loan.Loan;
+import loan.Return;
 import materialRegistration.Book;
 import materialRegistration.BookType;
 import studentRegistration.Career;
@@ -28,6 +29,7 @@ public class Library {
     List<List<Book>> bookList = new ArrayList<>();
     List<Student> studentsList = new ArrayList<>();
     List<Loan> loansList = new ArrayList<>(); 
+    List<Return> returnsList = new ArrayList<>(); 
     private static Library libraryInstance;
     
     
@@ -144,5 +146,21 @@ public class Library {
             this.bookList.remove(0);
         }
     }
+    
+        /**
+     * Looks for the loans of a student
+     * @param ID Student ID
+     * @return A list of loans
+     */
+    public List<Loan> getLoansByStudentID(int ID) {
+        List<Loan> loans = new ArrayList<>();
+        for (int i = 0; i < loansList.size(); i++){
+            if (loansList.get(i).getStudent().getID() == ID){
+                loans.add(loansList.get(i));
+            }
+        }
+        return loansList;
+    }
+    
     
 }
