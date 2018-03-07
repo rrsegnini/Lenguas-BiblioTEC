@@ -16,6 +16,8 @@ public class mainForm extends javax.swing.JFrame {
      */
     public mainForm() {
         initComponents();
+        
+        
     }
 
     /**

@@ -5,6 +5,7 @@
  */
 package loan;
 
+import java.io.Serializable;
 import java.util.Date;
 import studentRegistration.Student;
 
@@ -12,7 +13,7 @@ import studentRegistration.Student;
  *
  * @author danielalvarado
  */
-public class Loan {
+public class Loan implements Serializable{
     private int ID;
     private studentRegistration.Student student;
     private Date date;

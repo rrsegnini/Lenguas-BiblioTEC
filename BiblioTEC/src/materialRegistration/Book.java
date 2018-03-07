@@ -5,11 +5,13 @@
  */
 package materialRegistration;
 
+import java.io.Serializable;
+
 /**
  *
  * @author danielalvarado
  */
-public class Book implements Material{
+public class Book implements Material, Serializable{
     private int id;
     private String name;
     private String author;
@@ -70,7 +72,10 @@ public class Book implements Material{
     public boolean isState() {
         return state;
     }
-
+    /**
+     * Sets a book as available or not (true is available, false is unavailable)
+     * @param state 
+     */
     public void setState(boolean state) {
         this.state = state;
     }

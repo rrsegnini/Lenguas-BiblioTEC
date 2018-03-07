@@ -101,25 +101,34 @@ public class BookReturnForm extends javax.swing.JFrame {
 
     private void studentIDboxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_studentIDboxKeyReleased
         try{
+            //loanedBooksTable.setModel(null);
             studentRegistration.Student student = null;
             student = file.StudentFile.getInstance().
                     getStudentByID(Integer.parseInt(studentIDbox.getText()));
             //loanedBooksTable
                   
             
-        DefaultTableModel model = new DefaultTableModel(); 
+        DefaultTableModel model = new DefaultTableModel();
+        loanedBooksTable.setModel(model);
         model.addColumn("Type"); 
         model.addColumn("Name"); 
         model.addColumn("Date");
         model.addColumn("ISBN/SerialNumber"); 
 
        
-        List<loan.Loan> loans = domain.Library.getInstance()
-                .getLoansByStudentID(student.getID());
+        /*List<loan.Loan> loans = domain.Library.getInstance()
+                .getLoansByStudentID(student.getID());*/
+       List<loan.Loan> loans = 
+               domain.Library.getInstance().getLoansByStudentID(student.getID());
+       loans = 
+               domain.Library.getInstance().getLoansFromFile();
+        System.out.println(loans.size());
+        
+        
         
         for (int i = 0; i < loans.size(); i++){ 
-            
             if (loans.get(i) instanceof loan.BookLoan ){
+                
                 BookLoan bloan;
                 bloan = (BookLoan)loans.get(i);
                 materialRegistration.Book book = bloan.getBookLoaned();
@@ -144,6 +153,7 @@ public class BookReturnForm extends javax.swing.JFrame {
         loanedBooksTable.setModel(model);
         
         }catch(Exception e){
+            System.err.println(e.toString());
             System.out.println("Not yet");
         }
     }//GEN-LAST:event_studentIDboxKeyReleased

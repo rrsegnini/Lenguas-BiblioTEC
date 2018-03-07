@@ -200,6 +200,8 @@ public class StudentRegistrationForm extends javax.swing.JFrame {
                 .Student(ID, name, lastname, career);
             try{
                 domain.Library.getInstance().registerStudent(newStudent);
+                JOptionPane.showMessageDialog(rootPane, "Student registered successfully", 
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
             }catch(Exception e){
                 System.err.println(e.toString());
             }   

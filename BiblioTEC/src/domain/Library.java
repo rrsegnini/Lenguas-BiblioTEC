@@ -26,15 +26,19 @@ import studentRegistration.Student;
  * @author danielalvarado
  */
 public class Library {
-    List<List<Book>> bookList = new ArrayList<>();
-    List<Student> studentsList = new ArrayList<>();
-    List<Loan> loansList = new ArrayList<>(); 
-    List<Return> returnsList = new ArrayList<>(); 
-    private static Library libraryInstance;
+    List<List<Book>> bookList = new ArrayList<List<Book>>();
+    List<Student> studentsList = new ArrayList<Student>();
+    public List<Loan> registeredLoans = new ArrayList<Loan>(); 
+    List<Return> returnsList = new ArrayList<Return>(); 
+    private static Library libraryInstance = new Library();
+    private file.LoanFile loansFile;
     
     
     
     public Library() {this.bookList = new ArrayList<>();
+        registeredLoans = new ArrayList<Loan>(); 
+        loansFile = new file.LoanFile(registeredLoans);
+        loansFile.getData();
     }
     
     public static Library getInstance(){
@@ -47,6 +51,17 @@ public class Library {
     
     public void addBooksToList(List<Book> _books) {
         this.bookList.add(_books);
+    }
+    /**
+     * Returns the Loan objects saved on the loansFile.dat 
+     * @return A list of Loan objects
+     */
+    public List<Loan> getLoansFromFile(){
+        if (loansFile != null){
+            return loansFile.getData();
+        }else{
+            return null;
+        }
     }
     
     public List<Book>  searchBook(String _letters, int _counter) {
@@ -104,7 +119,28 @@ public class Library {
         Date actualDate = new Date();
         //int _ID, Student _student, Date _date,materialRegistration.Book _bookLoaned 
         if (!_book.onLoan()) {
-            BookLoan newBookLoan = new BookLoan(1,_student,actualDate,_book);
+            
+            _book.setState(false);
+            BookLoan newBookLoan = new BookLoan(_student,actualDate,_book);
+            
+            List<Loan> update = this.getLoansFromFile();
+            if (update != null){
+                update.add(newBookLoan);
+                loansFile = new file.LoanFile(update);
+                loansFile.saveData();
+                
+            }else{
+                registeredLoans.add(newBookLoan);
+                loansFile = new file.LoanFile(registeredLoans);
+                loansFile.saveData();
+                
+            }
+            
+            //this.loansFile = new file.LoanFile(update);
+            
+            registeredLoans.add(newBookLoan);
+            //this.loansList.add(newBookLoan);
+            
         }
     }
 
@@ -125,11 +161,11 @@ public class Library {
     }
 
     public List<Loan> getLoansList() {
-        return loansList;
+        return registeredLoans;
     }
 
     public void setLoansList(List<Loan> loansList) {
-        this.loansList = loansList;
+        this.registeredLoans = loansList;
     }
     
     public boolean deleteBooksList(int _pos) {
@@ -154,12 +190,13 @@ public class Library {
      */
     public List<Loan> getLoansByStudentID(int ID) {
         List<Loan> loans = new ArrayList<>();
-        for (int i = 0; i < loansList.size(); i++){
-            if (loansList.get(i).getStudent().getID() == ID){
-                loans.add(loansList.get(i));
+        for (int i = 0; i < registeredLoans.size(); i++){
+            if (registeredLoans.get(i).getStudent().getID() == ID){
+                System.out.println("ASFALSKJFHLAKSJFKLASF " + registeredLoans.get(i).getStudent().getID() );
+                loans.add(registeredLoans.get(i));
             }
         }
-        return loansList;
+        return loans;
     }
     
     

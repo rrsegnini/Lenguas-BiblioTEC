@@ -5,6 +5,7 @@
  */
 package loan;
 
+import java.io.Serializable;
 import java.util.Date;
 import materialRegistration.Audiovisual;
 import studentRegistration.Student;
