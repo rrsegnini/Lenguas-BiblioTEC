@@ -79,6 +79,14 @@ public class Library {
         this.audiovisualsList.add(audiovs);
     }
     
+    
+    /**
+     * Funcoin la cual es usada para crear una nueva lista de auydiovisuales basada en una lista anterior
+     * usando un nuevo criterio, es decir un substring con mas letras
+     * @param _letters letras (substring)
+     * @param _counter contador de la cantidad de cosas
+     * @return 
+     */
     public List<Audiovisual>  searchAudiovisual(String _letters, int _counter) {
         List<Audiovisual> audiovsList = audiovisualsList.get(_counter);
         List<Audiovisual> newAudiovsList = new ArrayList<>();
@@ -98,7 +106,13 @@ public class Library {
         return newAudiovsList;
     }
     
-    
+    /**
+     * Funcoin la cual es usada para crear una nueva lista de libross basada en una lista anterior
+     * usando un nuevo criterio, es decir un substring con mas letras
+     * @param _letters letras (substring)
+     * @param _counter contador de la cantidad de cosas
+     * @return 
+     */
     public List<Book>  searchBook(String _letters, int _counter) {
         List<Book> books = bookList.get(_counter);
         List<Book> newBookList = new ArrayList<>();
